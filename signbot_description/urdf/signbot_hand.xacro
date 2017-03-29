@@ -1,0 +1,453 @@
+<?xml version="1.0"?>
+
+<robot name="signbot_hand" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<!-- ////	COLORS	///// -->
+    <material name="Black">
+        <color rgba="0.0 0.0 0.0 1.0"/>
+    </material>
+
+    <material name="Red">
+        <color rgba="0.8 0.0 0.0 1.0"/>
+    </material>
+
+    <material name="White">
+        <color rgba="1.0 1.0 1.0 1.0"/>
+    </material>
+
+    <material name="Cyan">
+	<color rgba="0 1 1 1"/>
+    </material>
+
+    <material name="Yellow">
+	<color rgba="1 1 0 1"/>
+    </material>
+
+    <material name="Green">
+	<color rgba="0 1 0 1"/>
+    </material>
+ 
+    <material name="Blue">
+	<color rgba="0 0 .8 1"/>
+    </material>
+
+    <material name="Silver">
+	<color rgba="0.75 0.75 0.75 1"/>
+     </material>
+
+<!-- ////	Constants	///// -->
+
+<!-- Constants -->
+  <property name="PI" value="3.14159" />
+  <property name="TOLERANCE" value="0.001" /> 
+<!-- wrist link properties -->
+  <property name="WRIST_RADIUS" value="0.15" />
+<!-- palm link properties -->
+  <property name="PALM_DEPTH" value="${WRIST_RADIUS}" />
+  <property name="PALM_LENGTH" value="0.43"/> 
+  <property name="PALM_HEIGHT" value="0.35"/>
+<!-- thumb finger properties -->
+  <property name="THUMB_RADIUS" value="0.06" />
+  <property name="THUMB_BOTTOM_LENGTH" value="0.11" />
+  <property name="THUMB_TOP_LENGTH" value="${THUMB_RADIUS}" />
+<!-- generic fingers properties -->
+  <property name="GENERIC_FINGERS_RADIUS" value="0.05" />
+  <property name="GENERIC_FINGERS_X" value="0.027" />
+  <property name="INTERVAL_BETWEEN_FINGERS" value="0.01" />
+<!-- index finger properties -->
+  <property name="INDEX_BOTTOM_LENGTH" value="0.1" />
+  <property name="INDEX_MIDDLE_LENGTH" value="0.09" />
+  <property name="INDEX_TOP_LENGTH" value="${GENERIC_FINGERS_RADIUS}" />
+<!--  middle finger properties  -->
+  <property name="MIDDLE_BOTTOM_LENGTH" value="0.12" />
+  <property name="MIDDLE_MIDDLE_LENGTH" value="0.11" />
+  <property name="MIDDLE_TOP_LENGTH" value="${GENERIC_FINGERS_RADIUS}" />
+<!--  third finger properties  -->
+  <property name="THIRD_BOTTOM_LENGTH" value="0.1" />
+  <property name="THIRD_MIDDLE_LENGTH" value="0.1" />
+  <property name="THIRD_TOP_LENGTH" value="${GENERIC_FINGERS_RADIUS}" />
+<!--  little finger properties  -->
+  <property name="LITTLE_BOTTOM_LENGTH" value="0.075" />
+  <property name="LITTLE_MIDDLE_LENGTH" value="0.075" />
+  <property name="LITTLE_TOP_LENGTH" value="${GENERIC_FINGERS_RADIUS}" />
+
+<!-- ///////////////////////////////////////////////// BLOCKS OF CODE //////////////////////////////////////////////-->
+
+   <xacro:macro name="inertial_matrix" params="mass">
+      <inertial>
+      	<mass value="${mass}" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0" />
+      </inertial>
+   </xacro:macro>
+
+   <xacro:macro name="transmission_block" params="joint_name">
+	  <transmission name="tran1">
+	    <type>transmission_interface/SimpleTransmission</type>
+	    <joint name="${joint_name}">
+	      <hardwareInterface>PositionJointInterface</hardwareInterface>
+	    </joint>
+	    <actuator name="motor1">
+	      <hardwareInterface>PositionJointInterface</hardwareInterface>
+	      <mechanicalReduction>1</mechanicalReduction>
+	    </actuator>
+	  </transmission>
+   </xacro:macro>
+
+<!--	////////	LINK SHAPES	////////	-->
+<xacro:macro name="link_shape" params="name color *origin *shape">
+    <link name="${name}">
+        <visual>
+	   <xacro:insert_block name="origin" />
+            <geometry>
+                <xacro:insert_block name="shape" />
+            </geometry>
+            <material name="${color}" />
+        </visual>
+        <collision>
+	   <xacro:insert_block name="origin" />
+            <geometry>
+                <xacro:insert_block name="shape" />
+            </geometry>
+        </collision>
+	<xacro:inertial_matrix mass="1"/>
+    </link>
+</xacro:macro>
+
+<!--	///////		THUMB FINGER	///////	-->
+<xacro:macro name="thumb_finger" params="side">
+<!--	/////////////	-->
+    <xacro:link_shape name="${side}_knuckle_bottom_thumb_l" color="Blue">
+	<origin rpy="0 0 0" xyz="0 0 0"/>
+	<sphere radius="${THUMB_RADIUS}" />
+    </xacro:link_shape>
+
+    <gazebo reference="${side}_knuckle_bottom_thumb_l">
+      <material>Gazebo/Blue</material>
+    </gazebo>
+
+    <joint name="${side}_knuckle_bottom_thumb_j" type="revolute">
+        <parent link="${side}_palm_l"/>
+        <child link="${side}_knuckle_bottom_thumb_l"/>
+        <origin xyz="0 ${(PALM_LENGTH/2)+THUMB_RADIUS+TOLERANCE} ${THUMB_RADIUS}"/>
+	<axis xyz="1 0 0"/>
+	<limit effort="1000.0" lower="0" upper="${PI/2}" velocity="0.5"/> 		
+	<dynamics damping="50" friction="1"/>
+    </joint>
+
+<!--	/////////////	-->
+    <xacro:link_shape name="${side}_bottom_thumb_l" color="White">
+	<origin rpy="${PI/2} 0 0" xyz="0 ${THUMB_BOTTOM_LENGTH/2} 0"/>
+	<cylinder radius="${THUMB_RADIUS}" length="${THUMB_BOTTOM_LENGTH}"/>
+    </xacro:link_shape>
+
+    <gazebo reference="${side}_bottom_thumb_l">
+      <material>Gazebo/White</material>
+    </gazebo>
+
+    <joint name="${side}_knuckle_upper_thumb_j" type="revolute">
+        <parent link="${side}_knuckle_bottom_thumb_l"/>
+        <child link="${side}_bottom_thumb_l"/>
+    	<origin xyz="0 0 0"/>
+    	<axis xyz="0 0 1"/>
+    	<limit effort="1000.0" lower="-${PI/2}" upper="0" velocity="0.5"/>
+    	<dynamics damping="50" friction="1"/>
+    </joint>
+
+<!--	/////////////	-->
+    <xacro:link_shape name="${side}_middle_thumb_l" color="White">
+	<origin rpy="${PI/2} 0 0" xyz="0 ${THUMB_TOP_LENGTH/2} -${THUMB_RADIUS}"/>
+	<cylinder radius="${THUMB_RADIUS}" length="${THUMB_TOP_LENGTH}"/>
+    </xacro:link_shape>
+
+    <gazebo reference="${side}_middle_thumb_l">
+      <material>Gazebo/White</material>
+    </gazebo>
+
+    <joint name="${side}_middle_thumb_j" type="revolute">
+        <parent link="${side}_bottom_thumb_l"/>
+        <child link="${side}_middle_thumb_l"/>
+    	<origin xyz="0 ${THUMB_BOTTOM_LENGTH} ${THUMB_RADIUS}"/> 
+    	<axis xyz="1 0 0"/>
+    	<limit effort="1000.0" lower="0" upper="${PI/2}" velocity="0.5"/>
+    	<dynamics damping="50" friction="1"/>
+    </joint>
+
+<!--	/////////////	-->
+    <xacro:link_shape name="${side}_top_thumb_l" color="White">
+	<origin rpy="0 0 0" xyz="0 0 0"/>
+	<sphere radius="${THUMB_RADIUS}"/>
+    </xacro:link_shape>
+
+    <gazebo reference="${side}_top_thumb_l">
+      <material>Gazebo/White</material>
+    </gazebo>
+
+    <joint name="${side}_top_thumb_j" type="fixed">
+        <parent link="${side}_middle_thumb_l"/>
+        <child link="${side}_top_thumb_l"/>
+    	<origin xyz="0 0.06 -0.06"/>
+    </joint>
+
+
+<!--///	TRANSMICION ROS CONTROL	/// -->
+   <xacro:transmission_block joint_name="${side}_knuckle_bottom_thumb_j"/>
+   <xacro:transmission_block joint_name="${side}_knuckle_upper_thumb_j"/>
+   <xacro:transmission_block joint_name="${side}_middle_thumb_j"/>
+
+</xacro:macro>
+
+<!--///////////////////	GENERIC FINGER	////////////////////////////////////////////
+palm -> 0.43 for 4 fingers + 0.01 of interval between fingers 
+	finger radius: 0.05
+	0.05*2*4+3*0.01 = 0.43
+///////////////////////////////////////////////////////////////////////////	-->
+
+<xacro:macro name="generic_finger" 
+	params="name side ref_point bottom_length middle_length top_length">
+<!--	/////////////	-->
+    <xacro:link_shape name="${side}_knuckle_bottom_${name}_l" color="Blue">
+	<origin rpy="0 0 0" xyz="0 0 0"/>
+	<sphere radius="${GENERIC_FINGERS_RADIUS}" />
+    </xacro:link_shape>
+
+    <gazebo reference="${side}_knuckle_bottom_${name}_l">
+      <material>Gazebo/Blue</material>
+    </gazebo>
+	
+    <joint name="${side}_knuckle_bottom_${name}_j" type="revolute">
+        <parent link="${side}_palm_l"/>
+        <child link="${side}_knuckle_bottom_${name}_l"/>
+        <origin xyz="${GENERIC_FINGERS_X} ${ref_point} ${PALM_HEIGHT}"/>
+    	<axis xyz="0 1 0"/>
+    	<limit effort="1000.0" lower="0" upper="${PI/2}" velocity="0.5"/>
+    	<dynamics damping="50" friction="1"/>
+    </joint>
+
+<!--	/////////////	-->
+    <xacro:link_shape name="${side}_bottom_${name}_l" color="White">
+	<origin rpy="0 0 0" xyz="0 0 ${bottom_length/2}"/>
+	<cylinder radius="${GENERIC_FINGERS_RADIUS}" length="${bottom_length}"/>
+    </xacro:link_shape>
+
+    <gazebo reference="${side}_bottom_${name}_l">
+      <material>Gazebo/White</material>
+    </gazebo>
+
+    <joint name="${side}_knuckle_upper_${name}_j" type="fixed">
+        <parent link="${side}_knuckle_bottom_${name}_l"/>
+        <child link="${side}_bottom_${name}_l"/>
+    	<origin xyz="0 0 ${GENERIC_FINGERS_RADIUS}"/>
+    </joint>
+
+<!--	/////////////	-->
+    <xacro:link_shape name="${side}_middle_${name}_l" color="White">
+	<origin rpy="0 0 0" xyz="-${GENERIC_FINGERS_RADIUS} 0 ${middle_length/2}"/>
+	<cylinder radius="${GENERIC_FINGERS_RADIUS}" length="${middle_length}"/>
+    </xacro:link_shape>
+
+    <gazebo reference="${side}_middle_${name}_l">
+      <material>Gazebo/White</material>
+    </gazebo>
+
+    <joint name="${side}_middle_${name}_j" type="revolute">
+        <parent link="${side}_bottom_${name}_l"/>
+        <child link="${side}_middle_${name}_l"/>
+    	<origin xyz="${GENERIC_FINGERS_RADIUS} 0 ${bottom_length}"/>
+    	<axis xyz="0 1 0"/>
+    <limit effort="1000.0" lower="0" upper="${PI/2}" velocity="0.5"/>
+    <dynamics damping="50" friction="1"/>
+    </joint>
+
+<!--	/////////////	-->
+    <xacro:link_shape name="${side}_top_${name}_l" color="White">
+	<origin rpy="0 0 0" xyz="-${GENERIC_FINGERS_RADIUS} 0 ${top_length/2}"/>
+	<cylinder radius="${GENERIC_FINGERS_RADIUS}" length="${top_length}"/>
+    </xacro:link_shape>
+
+    <gazebo reference="${side}_top_${name}_l">
+      <material>Gazebo/White</material>
+    </gazebo>
+
+    <joint name="${side}_top_${name}_j" type="revolute">
+        <parent link="${side}_middle_${name}_l"/>
+        <child link="${side}_top_${name}_l"/>
+    	<origin xyz="0 0 ${middle_length}"/>
+    	<axis xyz="0 1 0"/>
+   	<limit effort="1000.0" lower="0" upper="${PI/2}" velocity="0.5"/>
+    	<dynamics damping="50" friction="1"/>
+    </joint>
+
+<!--	/////////////	-->
+    <xacro:link_shape name="${side}_toptop_${name}_l" color="White">
+	<origin rpy="0 0 0" xyz="0 0 0"/>
+	<sphere radius="${GENERIC_FINGERS_RADIUS}"/>
+    </xacro:link_shape>
+
+    <gazebo reference="${side}_toptop_${name}_l">
+      <material>Gazebo/White</material>
+    </gazebo>
+
+    <joint name="${side}_toptop_${name}_j" type="fixed">
+        <parent link="${side}_top_${name}_l"/>
+        <child link="${side}_toptop_${name}_l"/>
+    	<origin xyz="-${GENERIC_FINGERS_RADIUS} 0 ${GENERIC_FINGERS_RADIUS}"/>
+    </joint>
+
+<!--///	TRANSMICION ROS CONTROL	/// -->
+   <xacro:transmission_block joint_name="${side}_knuckle_bottom_${name}_j"/>
+   <xacro:transmission_block joint_name="${side}_middle_${name}_j"/>
+   <xacro:transmission_block joint_name="${side}_top_${name}_j"/>
+
+</xacro:macro>
+
+
+
+<!-- /////////////////////////////////  MODEL   ////////////////////////////////////////////////////////////// -->
+
+  <link name="base_link">
+
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 -0.4"/> 
+      <geometry>
+	       <box size="0.5 0.5 0.0001"/>
+      </geometry>
+      <material name="Black" />
+    </visual>
+
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 -0.4"/>
+      <geometry>
+	        <box size="0.5 0.5 0.0001"/>
+      </geometry>
+      </collision>
+	<xacro:inertial_matrix mass="1000"/>
+
+  </link>
+
+  <gazebo reference="base_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+  <link name="base_link2">
+
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 -0.2"/> 
+      <geometry>
+	       <cylinder radius="${WRIST_RADIUS}" length="0.4"/>
+      </geometry>
+      <material name="Black" />
+    </visual>
+
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 -0.2"/>
+      <geometry>
+	       <cylinder radius="${WRIST_RADIUS}" length="0.4"/>
+      </geometry>
+      </collision>
+	<xacro:inertial_matrix mass="1000"/>
+
+  </link>
+  
+  <gazebo reference="base_link2">
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+ <joint name="r_base_link_j" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_link2"/>
+    <origin xyz="0 0 0"/>
+  </joint>
+
+<!-- WIRST LINK -->
+  <xacro:link_shape name="r_wirst_l" color="Blue">
+	<origin xyz="0 0 0" rpy="0 0 0" />
+	<sphere radius="${WRIST_RADIUS}"/>
+  </xacro:link_shape>
+
+  <gazebo reference="r_wirst_l">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+
+  <joint name="r_wirst_j" type="revolute">
+    <parent link="base_link2"/>
+    <child link="r_wirst_l"/>
+    <origin xyz="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="1000.0" lower="-${PI/4}" upper="${PI/4}" velocity="0.5"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+<!-- PALM LINK -->
+  <xacro:link_shape name="r_palm_l" color="White">
+	<origin rpy="0 0 0" xyz="0 0 0.17"/>
+	<box size="${PALM_DEPTH} ${PALM_LENGTH} ${PALM_HEIGHT}"/>
+  </xacro:link_shape>
+
+  <gazebo reference="r_palm_l">
+    <material>Gazebo/White</material>
+  </gazebo>
+
+  <joint name="r_upper_wirst_j" type="revolute">
+    <parent link="r_wirst_l"/>
+    <child link="r_palm_l"/>
+    <origin xyz="0 0 0.10"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="1000.0" lower="-${PI/4}" upper="${PI/4}" velocity="0.5"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+<!--   THUMB FINGER -->
+  <xacro:thumb_finger side="r" />
+
+<!--	/////////////////////////////////////////////////////////////
+	palm -> 0.43 for 4 fingers + 0.01 of interval between fingers
+	finger radius: 0.05
+	0.05*2*4+3*0.01 = 0.43
+	/////////////////////////////////////////////////////////////	-->
+<!--	FOUR FINGERS	(INDEX, MIDDLE, THIRD, LITTLE)-->
+  <xacro:generic_finger name= "index" 
+			side="r" 
+			ref_point="${(PALM_LENGTH/2)-GENERIC_FINGERS_RADIUS}" 
+			bottom_length="${INDEX_BOTTOM_LENGTH}" 
+			middle_length="${INDEX_MIDDLE_LENGTH}"
+			top_length="${INDEX_TOP_LENGTH}" />
+
+  <xacro:generic_finger name= "middle" 
+			side="r" 
+			ref_point="${(PALM_LENGTH/2)-GENERIC_FINGERS_RADIUS*3-INTERVAL_BETWEEN_FINGERS}" 
+			bottom_length="${MIDDLE_BOTTOM_LENGTH}" 
+			middle_length="${MIDDLE_MIDDLE_LENGTH}"
+			top_length="${MIDDLE_TOP_LENGTH}" />
+
+  <xacro:generic_finger name= "third" 
+			side="r" 
+			ref_point="${(PALM_LENGTH/2)-GENERIC_FINGERS_RADIUS*5-INTERVAL_BETWEEN_FINGERS*2}" 
+			bottom_length="${THIRD_BOTTOM_LENGTH}" 
+			middle_length="${THIRD_MIDDLE_LENGTH}"
+			top_length="${THIRD_TOP_LENGTH}" />
+
+  <xacro:generic_finger name= "little" 
+			side="r" 
+			ref_point="${(PALM_LENGTH/2)-GENERIC_FINGERS_RADIUS*7-INTERVAL_BETWEEN_FINGERS*3}" 
+			bottom_length="${LITTLE_BOTTOM_LENGTH}" 
+			middle_length="${LITTLE_MIDDLE_LENGTH}"
+			top_length="${LITTLE_TOP_LENGTH}" />
+
+
+<!-- //////////////////////////////	END MODEL	///////////////////////////////////////////////// -->
+
+
+<!-- Transmissions for ROS Control -->
+  <xacro:transmission_block joint_name="r_wirst_j"/>
+  <xacro:transmission_block joint_name="r_upper_wirst_j"/>
+	
+<!-- ros_control plugin -->
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/hand</robotNamespace>
+    </plugin>
+  </gazebo>
+
+
+</robot>
+

@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+
+<robot name="signbot_2arms" xmlns:xacro="http://www.ros.org/wiki/xacro" >
+	<xacro:include filename="$(find signbot_description)/urdf/signbot_1_macros.xacro" />
+
+
+<!-- /////////		MODEL		////////////////////////// -->
+<link name="base_footprint">
+  <inertial>
+    <mass value="1.0"/>
+    <origin xyz="0 0 0"/>
+    <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <geometry>
+      <box size="0.01 0.01 0.01"/>
+    </geometry>
+    <material name="White"/>
+  </visual>
+  <collision>
+    <!-- represent base collision with a simple rectangular model, positioned by base_size_z s.t. top
+           surface of the collision box matches the top surface of the PR2 base -->
+    <origin rpy="0 0 0" xyz="0 0 0.071"/>
+    <geometry>
+      <box size="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+<joint name="base_footprint_joint" type="fixed">
+  <origin rpy="0 0 0" xyz="0 0 0.051"/>
+  <child link="base_link"/>
+  <parent link="base_footprint"/>
+</joint>
+<!-- base link -->
+ <link name="base_link">
+
+    <visual>
+      <origin xyz="0 0 ${TORSO_HEIGHT/2}" rpy="0 0 0" />
+      <geometry>
+	       <box size="${TORSO_DEPTH} ${TORSO_LENGTH} ${TORSO_HEIGHT}" />
+      </geometry>
+      <material name="Black" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 ${TORSO_HEIGHT/2}" rpy="0 0 0" />
+      <geometry>
+	       <box size="${TORSO_DEPTH} ${TORSO_LENGTH} ${TORSO_HEIGHT}" />
+      </geometry>
+      </collision>
+	<xacro:inertial_matrix mass="50"/>
+  </link>
+
+  <gazebo reference="base_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+<!-- torso LINK -->
+  <xacro:link_shape name="torso_link" color="White">
+	<origin xyz="0 0 ${TORSO_HEIGHT/2}" rpy="0 0 0" />
+	<box size="${TORSO_DEPTH} ${TORSO_LENGTH} ${TORSO_HEIGHT}" />
+  </xacro:link_shape>
+
+  <gazebo reference="torso_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+
+ <joint name="bottom_joint" type="fixed">
+    <origin xyz="0 0 ${TORSO_HEIGHT}" rpy="0 0 0" />
+    <parent link="base_link"/>
+    <child link="torso_link"/>
+  </joint>
+
+<!-- ////////////////// right side /////////////// -->
+<!-- arm -->
+  <xacro:arm side="r" 
+	     axis_y_signal="-1"
+	     lower="0"
+	     upper="1" />
+
+<!-- hand -->
+  <xacro:hand side="r" 
+		axis_y_signal="-1" />
+
+<!-- ////////////////// left side /////////////// -->
+<!-- arm -->
+  <xacro:arm side="l" 
+	     axis_y_signal="1"
+	     lower="1"
+	     upper="0" />
+
+<!-- hand -->
+  <xacro:hand side="l" 
+		axis_y_signal="1" />
+ 
+<!-- /////////////////	END MODEL	//////////////////////// -->
+
+</robot>

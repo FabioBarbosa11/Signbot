@@ -1,0 +1,835 @@
+<?xml version="1.0"?>
+<robot name="signbot_hand">
+
+<!-- /////////////////////////////////////////////////////////////////
+		COLORS
+/////////////////////////////////////////////////////////////////  -->
+<material name="cyan">
+  <color rgba="0 1 1  .5"/>
+</material>
+
+<material name="yellow">
+  <color rgba="1 1 0 .5"/>
+</material>
+
+<material name="green">
+  <color rgba="0 1 0 0.5"/>
+</material>
+
+<material name="blue">
+  <color rgba="0 0 .8 .5"/>
+</material>
+
+<material name="red">
+  <color rgba="0.8 0 0 .5"/>
+</material>
+
+<material name="white">
+  <color rgba="1 1 1 0.5"/>
+</material>
+
+<material name="silver">
+  <color rgba="0.75 0.75 0.75 .5"/>
+</material>
+<!-- ////////////////////////////////////////////////////////////////
+			HAND MODEL
+     //////////////////////////////////////////////////////////// -->
+  <link name="base_link">
+    <visual>
+      <geometry>
+	<cylinder radius="0.15" length="0.4"/>
+      </geometry>
+      <material name="silver"/>
+      <origin rpy="0 0 0" xyz="0 0 -0.2"/>	
+     </visual>
+     <colision>
+	<origin rpy="0 0 0" xyz="0 0 -0.2"/>
+	<geometry>
+	  <cylinder radius="0.15" length="0.005"/>
+     	</geometry>
+     </colision>
+
+     <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <link name="r_wirst_l">
+    <visual>
+      <geometry>
+	<sphere radius = "0.15"/>
+      </geometry>
+      <material name="blue"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>	
+     </visual>
+     <colision>
+	<origin rpy="0 0 0" xyz="0 0 0"/>
+	<geometry>
+	  <sphere radius = "0.15"/>
+     	</geometry>
+     </colision>
+
+     <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <joint name="r_wirst_j" type="revolute">
+	<parent link="base_link"/>
+	<child link="r_wirst_l"/>
+   	<origin xyz="0 0 0"/>
+	<axis xyz="1 0 0"/>
+    	<limit effort="1000.0" lower="-0.785" upper="0.785" velocity="0.5"/>
+    	<dynamics damping="50" friction="1"/>
+  </joint>
+<!-- 45 ou PI/4 : 0.785 -->
+
+  <link name="r_palm_l">
+    <visual>
+      <geometry>
+        <box size="0.15 0.43 0.35"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.17"/>
+      <material name="silver"/>
+    </visual>
+    <colision>
+	<geometry>
+          <box size="0.15 0.35 0.35"/>
+        </geometry>
+	<origin rpy="0 0 0" xyz="0 0 0.17"/>
+    </colision>
+
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <joint name="r_upper_wirst_j" type="revolute">
+    <parent link="r_wirst_l"/>
+    <child link="r_palm_l"/>
+    <origin xyz="0 0 0.10"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="1000.0" lower="-0.785" upper="0.785" velocity="0.5"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+<!-- 45  ou PI/4: 0.785 -->
+
+
+<!--	/////////////////////////////////////////////////////////////
+	palm -> 0.43 for 4 fingers + 0.01 of interval between fingers
+	finger radius: 0.05
+	0.05*2*4+3*0.01 = 0.43
+////////////////////////////////////////////////////////////	-->
+
+<!-- ///////////////////////////////////////////////////////////
+			THUMB FINGER
+////////////////////////////////////////////////////////////// -->
+  <link name="r_knuckle_bottom_thumb_l">
+    <visual>
+      <geometry>
+        <sphere radius="0.06" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="blue"/>
+    </visual>
+    <colision>
+	 <geometry>
+           <sphere radius="0.06" />
+         </geometry>
+      	 <origin rpy="0 0 0" xyz="0 0 0"/>
+    </colision>
+
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0"/>
+    </inertial>
+
+  </link>
+  <joint name="r_knuckle_bottom_thumb__j" type="revolute">
+    <parent link="r_palm_l"/>
+    <child link="r_knuckle_bottom_thumb_l"/>
+    <origin xyz="0 0.276 0.05"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="1000.0" lower="0" upper="1.57" velocity="0.5"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+  <link name="r_bottom_thumb_l">
+    <visual>
+      <geometry>
+        <cylinder radius="0.06" length="0.11"/>
+      </geometry>
+      <origin rpy="1.57 0 0" xyz="0 .055 0"/>
+      <material name="white"/>
+    </visual>
+    <colision>
+	<geometry>
+          <cylinder radius="0.06" length="0.11"/>>
+        </geometry>
+        <origin rpy="1.57 0 0" xyz="0 .055 0"/>
+    </colision>
+
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0"/>
+    </inertial>
+
+  </link> 
+  <joint name="r_knuckle_upper_thumb_j" type="revolute">
+    <parent link="r_knuckle_bottom_thumb_l"/>
+    <child link="r_bottom_thumb_l"/>
+    <origin xyz="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="1000.0" lower="-1.57" upper="0" velocity="0.5"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+<link name="r_middle_thumb_l">
+    <visual>
+      <geometry>
+        <cylinder radius="0.06" length="0.06"/>
+      </geometry>
+      <origin rpy="1.57 0 0" xyz="0 .03 -0.06"/>
+      <material name="white"/>
+    </visual>
+    <colision>
+	<geometry>
+          <cylinder radius="0.06" length="0.06"/>
+        </geometry>
+        <origin rpy="1.57 0 0" xyz="0 .03 -0.06"/>
+    </colision>
+
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0"/>
+    </inertial>
+
+  </link> 
+  <joint name="r_middle_thumb_j" type="revolute">
+    <parent link="r_bottom_thumb_l"/>
+    <child link="r_middle_thumb_l"/>
+    <origin xyz="0 0.11 0.06"/> 
+    <axis xyz="1 0 0"/>
+    <limit effort="1000.0" lower="0" upper="1.57" velocity="0.5"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+<link name="r_top_thumb_l">
+    <visual>
+      <geometry>
+        <sphere radius="0.06"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="white"/>
+    </visual>
+    <colision>
+	<geometry>
+        <sphere radius="0.06"/>
+        </geometry>
+        <origin rpy="1.57 0 0" xyz="0 0 0"/>
+    </colision>
+
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0"/>
+    </inertial>
+
+  </link> 
+  <joint name="r_top_thumb_j" type="fixed">
+    <parent link="r_middle_thumb_l"/>
+    <child link="r_top_thumb_l"/>
+    <origin xyz="0 0.06 -0.06"/>
+  </joint>
+
+<!--  ///////////////////////////////////////////////////////////////
+			Index finger
+////////////////////////////////////////////////////////////////// -->
+<link name="r_knuckle_bottom_index_l">
+    <visual>
+      <geometry>
+        <sphere radius="0.05" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="blue"/>
+    </visual>
+    <colision>
+	 <geometry>
+           <sphere radius="0.05" />
+         </geometry>
+      	 <origin rpy="0 0 0" xyz="0 0 0"/>
+    </colision>
+
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0"/>
+    </inertial>
+
+  </link>
+  <joint name="r_knuckle_bottom_index_j" type="revolute">
+    <parent link="r_palm_l"/>
+    <child link="r_knuckle_bottom_index_l"/>
+    <origin xyz="0.027 0.165 0.35"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="1000.0" lower="0" upper="1.57" velocity="0.5"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+  <link name="r_bottom_index_l">
+    <visual>
+      <geometry>
+        <cylinder radius="0.05" length="0.1"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.05"/>
+      <material name="white"/>
+    </visual>
+    <colision>
+	<geometry>
+          <cylinder radius="0.05" length="0.1"/>
+        </geometry>
+        <origin rpy="0 0 0" xyz="0 0 0.05"/>
+    </colision>
+
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0"/>
+    </inertial>
+
+  </link> 
+  <joint name="r_knuckle_upper_index_j" type="fixed">
+    <parent link="r_knuckle_bottom_index_l"/>
+    <child link="r_bottom_index_l"/>
+    <origin xyz="0 0 0.05"/>
+  </joint>
+
+<link name="r_middle_index_l">
+    <visual>
+      <geometry>
+        <cylinder radius="0.05" length="0.09"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="-.05 0 0.045"/>
+      <material name="white"/>
+    </visual>
+    <colision>
+	<geometry>
+          <cylinder radius="0.05" length="0.09"/>
+        </geometry>
+        <origin rpy="0 0 0" xyz="0 0 0.045"/>
+    </colision>
+
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link> 
+
+  <joint name="r_middle_index_j" type="revolute">
+    <parent link="r_bottom_index_l"/>
+    <child link="r_middle_index_l"/>
+    <origin xyz="0.05 0 0.1"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="1000.0" lower="0" upper="1.57" velocity="0.5"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+<link name="r_top_index_l">
+    <visual>
+      <geometry>
+        <cylinder radius="0.05" length="0.05"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="-.05 0 0.025"/>
+      <material name="white"/>
+    </visual>
+    <colision>
+	<geometry>
+          <cylinder radius="0.05" length="0.05"/>
+        </geometry>
+        <origin rpy="0 0 0" xyz="0 0 0.025"/>
+    </colision>
+
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link> 
+
+  <joint name="r_top_index_j" type="revolute">
+    <parent link="r_middle_index_l"/>
+    <child link="r_top_index_l"/>
+    <origin xyz="0 0 0.09"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="1000.0" lower="0" upper="1.57" velocity="0.5"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+<link name="r_toptop_index_l">
+    <visual>
+      <geometry>
+        <sphere radius="0.05"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="white"/>
+    </visual>
+    <colision>
+	<geometry>
+        <sphere radius="0.05"/>
+        </geometry>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+    </colision>
+
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0"/>
+    </inertial>
+
+  </link> 
+  <joint name="r_toptop_index_j" type="fixed">
+    <parent link="r_top_index_l"/>
+    <child link="r_toptop_index_l"/>
+    <origin xyz="-0.05 0 0.05"/>
+  </joint>
+
+<!--	///////////////////////////////////////////////////////////////
+			MIDDLE FINGER
+///////////////////////////////////////////////////////////////// -->
+<link name="r_knuckle_bottom_middle_l">
+    <visual>
+      <geometry>
+        <sphere radius="0.05" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="blue"/>
+    </visual>
+    <colision>
+	 <geometry>
+           <sphere radius="0.05" />
+         </geometry>
+      	 <origin rpy="0 0 0" xyz="0 0 0"/>
+    </colision>
+
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0"/>
+    </inertial>
+
+  </link>
+  <joint name="r_knuckle_bottom_middle_j" type="revolute">
+    <parent link="r_palm_l"/>
+    <child link="r_knuckle_bottom_middle_l"/>
+    <origin xyz="0.027 0.055 0.35"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="1000.0" lower="0" upper="1.57" velocity="0.5"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+  <link name="r_bottom_middle_l">
+    <visual>
+      <geometry>
+        <cylinder radius="0.05" length="0.12"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.06"/>
+      <material name="white"/>
+    </visual>
+    <colision>
+	<geometry>
+          <cylinder radius="0.05" length="0.12"/>
+        </geometry>
+        <origin rpy="0 0 0" xyz="0 0 0.06"/>
+    </colision>
+
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0"/>
+    </inertial>
+
+  </link> 
+  <joint name="r_knuckle_upper_middle_j" type="fixed">
+    <parent link="r_knuckle_bottom_middle_l"/>
+    <child link="r_bottom_middle_l"/>
+    <origin xyz="0 0 0.05"/>
+  </joint>
+
+<link name="r_middle_middle_l">
+    <visual>
+      <geometry>
+        <cylinder radius="0.05" length="0.11"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="-0.05 0 0.055"/>
+      <material name="white"/>
+    </visual>
+    <colision>
+	<geometry>
+          <cylinder radius="0.05" length="0.11"/>
+        </geometry>
+        <origin rpy="0 0 0" xyz="-0.05 0 0.055"/>
+    </colision>
+
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link> 
+
+  <joint name="r_middle_middle_j" type="revolute">
+    <parent link="r_bottom_middle_l"/>
+    <child link="r_middle_middle_l"/>
+    <origin xyz="0.05 0 0.12"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="1000.0" lower="0" upper="1.57" velocity="0.5"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+<link name="r_top_middle_l">
+    <visual>
+      <geometry>
+        <cylinder radius="0.05" length="0.05"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="-.05 0 0.025"/>
+      <material name="white"/>
+    </visual>
+    <colision>
+	<geometry>
+          <cylinder radius="0.05" length="0.05"/>
+        </geometry>
+        <origin rpy="0 0 0" xyz="-.05 0 0.025"/>
+    </colision>
+
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link> 
+
+  <joint name="r_top_middle_j" type="revolute">
+    <parent link="r_middle_middle_l"/>
+    <child link="r_top_middle_l"/>
+    <origin xyz="0 0 0.11"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="1000.0" lower="0" upper="1.57" velocity="0.5"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+<link name="r_toptop_middle_l">
+    <visual>
+      <geometry>
+        <sphere radius="0.05"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="white"/>
+    </visual>
+    <colision>
+	<geometry>
+        <sphere radius="0.05"/>
+        </geometry>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+    </colision>
+
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0"/>
+    </inertial>
+
+  </link> 
+  <joint name="r_toptop_middle_j" type="fixed">
+    <parent link="r_top_middle_l"/>
+    <child link="r_toptop_middle_l"/>
+    <origin xyz="-0.05 0 0.05"/>
+  </joint>
+
+
+<!--	/////////////////////////////////////////////////////////////
+			THIRD FINGER
+//////////////////////////////////////////////////////////////	-->
+<link name="r_knuckle_bottom_third_l">
+    <visual>
+      <geometry>
+        <sphere radius="0.05" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="blue"/>
+    </visual>
+    <colision>
+	 <geometry>
+           <sphere radius="0.05" />
+         </geometry>
+      	 <origin rpy="0 0 0" xyz="0 0 0"/>
+    </colision>
+
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0"/>
+    </inertial>
+
+  </link>
+  <joint name="r_knuckle_bottom_third_j" type="revolute">
+    <parent link="r_palm_l"/>
+    <child link="r_knuckle_bottom_third_l"/>
+    <origin xyz="0.027 -.055 0.35"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="1000.0" lower="0" upper="1.57" velocity="0.5"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+  <link name="r_bottom_third_l">
+    <visual>
+      <geometry>
+        <cylinder radius="0.05" length="0.1"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.05"/>
+      <material name="white"/>
+    </visual>
+    <colision>
+	<geometry>
+          <cylinder radius="0.05" length="0.1"/>
+        </geometry>
+        <origin rpy="0 0 0" xyz="0 0 0.05"/>
+    </colision>
+
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0"/>
+    </inertial>
+
+  </link> 
+  <joint name="r_knuckle_upper_third_j" type="fixed">
+    <parent link="r_knuckle_bottom_third_l"/>
+    <child link="r_bottom_third_l"/>
+    <origin xyz="0 0 0.05"/>
+  </joint>
+
+<link name="r_middle_third_l">
+    <visual>
+      <geometry>
+        <cylinder radius="0.05" length="0.1"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="-.05 0 0.05"/>
+      <material name="white"/>
+    </visual>
+    <colision>
+	<geometry>
+          <cylinder radius="0.05" length="0.1"/>
+        </geometry>
+        <origin rpy="0 0 0" xyz="-.05 0 0.05"/>
+    </colision>
+
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link> 
+
+  <joint name="r_middle_third_j" type="revolute">
+    <parent link="r_bottom_third_l"/>
+    <child link="r_middle_third_l"/>
+    <origin xyz="0.05 0 0.1"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="1000.0" lower="0" upper="1.57" velocity="0.5"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+<link name="r_top_third_l">
+    <visual>
+      <geometry>
+        <cylinder radius="0.05" length="0.05"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="-.05 0 0.025"/>
+      <material name="white"/>
+    </visual>
+    <colision>
+	<geometry>
+          <cylinder radius="0.05" length="0.05"/>
+        </geometry>
+        <origin rpy="0 0 0" xyz="-.05 0 0.025"/>
+    </colision>
+
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link> 
+
+  <joint name="r_top_third_j" type="revolute">
+    <parent link="r_middle_third_l"/>
+    <child link="r_top_third_l"/>
+    <origin xyz="0 0 0.1"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="1000.0" lower="0" upper="1.57" velocity="0.5"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+<link name="r_toptop_third_l">
+    <visual>
+      <geometry>
+        <sphere radius="0.05"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="white"/>
+    </visual>
+    <colision>
+	<geometry>
+        <sphere radius="0.05"/>
+        </geometry>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+    </colision>
+
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0"/>
+    </inertial>
+
+  </link> 
+  <joint name="r_toptop_third_j" type="fixed">
+    <parent link="r_top_third_l"/>
+    <child link="r_toptop_third_l"/>
+    <origin xyz="-0.05 0 0.05"/>
+  </joint>
+<!-- ////////////////////////////////////////////////////////////////
+			LITTLE FINGER
+/////////////////////////////////////////////////////////////	-->
+<link name="r_knuckle_bottom_little_l">
+    <visual>
+      <geometry>
+        <sphere radius="0.05" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="blue"/>
+    </visual>
+    <colision>
+	 <geometry>
+           <sphere radius="0.05" />
+         </geometry>
+      	 <origin rpy="0 0 0" xyz="0 0 0"/>
+    </colision>
+
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0"/>
+    </inertial>
+
+  </link>
+  <joint name="r_knuckle_bottom_little_j" type="revolute">
+    <parent link="r_palm_l"/>
+    <child link="r_knuckle_bottom_little_l"/>
+    <origin xyz="0.027 -.165 0.35"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="1000.0" lower="0" upper="1.57" velocity="0.5"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+  <link name="r_bottom_little_l">
+    <visual>
+      <geometry>
+        <cylinder radius="0.05" length="0.075"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.0375"/>
+      <material name="white"/>
+    </visual>
+    <colision>
+	<geometry>
+          <cylinder radius="0.05" length="0.075"/>
+        </geometry>
+        <origin rpy="0 0 0" xyz="0 0 0.0375"/>
+    </colision>
+
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0"/>
+    </inertial>
+
+  </link> 
+  <joint name="r_knuckle_upper_little_j" type="fixed">
+    <parent link="r_knuckle_bottom_little_l"/>
+    <child link="r_bottom_little_l"/>
+    <origin xyz="0 0 0.05"/>
+  </joint>
+
+<link name="r_middle_little_l">
+    <visual>
+      <geometry>
+        <cylinder radius="0.05" length="0.075"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="-.05 0 0.0375"/>
+      <material name="white"/>
+    </visual>
+    <colision>
+	<geometry>
+          <cylinder radius="0.05" length="0.075"/>
+        </geometry>
+        <origin rpy="0 0 0" xyz="-.05 0 0.0375"/>
+    </colision>
+
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link> 
+
+  <joint name="r_middle_little_j" type="revolute">
+    <parent link="r_bottom_little_l"/>
+    <child link="r_middle_little_l"/>
+    <origin xyz="0.05 0 0.075"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="1000.0" lower="0" upper="1.57" velocity="0.5"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+<link name="r_top_little_l">
+    <visual>
+      <geometry>
+        <cylinder radius="0.05" length="0.05"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="-.05 0 0.025"/>
+      <material name="white"/>
+    </visual>
+    <colision>
+	<geometry>
+          <cylinder radius="0.05" length="0.05"/>
+        </geometry>
+        <origin rpy="0 0 0" xyz="-.05 0 0.025"/>
+    </colision>
+
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link> 
+
+  <joint name="r_top_little_j" type="revolute">
+    <parent link="r_middle_little_l"/>
+    <child link="r_top_little_l"/>
+    <origin xyz="0 0 0.075"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="1000.0" lower="0" upper="1.57" velocity="0.5"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+<link name="r_toptop_little_l">
+    <visual>
+      <geometry>
+        <sphere radius="0.05"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="white"/>
+    </visual>
+    <colision>
+	<geometry>
+        <sphere radius="0.05"/>
+        </geometry>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+    </colision>
+
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0"/>
+    </inertial>
+
+  </link> 
+  <joint name="r_toptop_little_j" type="fixed">
+    <parent link="r_top_little_l"/>
+    <child link="r_toptop_little_l"/>
+    <origin xyz="-0.05 0 0.05"/>
+  </joint>
+
+</robot>

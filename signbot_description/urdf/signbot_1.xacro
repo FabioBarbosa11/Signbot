@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+
+<robot name="signbot_1" xmlns:xacro="http://www.ros.org/wiki/xacro" >
+	<xacro:include filename="$(find signbot_description)/urdf/signbot_1_macros.xacro" />
+
+
+<!-- /////////		MODEL		////////////////////////// -->
+<!-- base link  This link is the base of the model -->
+ <joint name="bottom_joint" type="fixed">
+    <origin xyz="0 0 ${TORSO_HEIGHT}" rpy="0 0 0" />
+    <parent link="base_link"/>
+    <child link="torso_link"/>
+  </joint>
+
+  <link name="base_link">
+
+    <visual>
+      <origin xyz="0 0 ${TORSO_HEIGHT/2}" rpy="0 0 0" />
+      <geometry>
+	       <box size="${TORSO_DEPTH} ${TORSO_LENGTH} ${TORSO_HEIGHT}" />
+      </geometry>
+      <material name="Black" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 ${TORSO_HEIGHT/2}" rpy="0 0 0" />
+      <geometry>
+	       <box size="${TORSO_DEPTH} ${TORSO_LENGTH} ${TORSO_HEIGHT}" />
+      </geometry>
+      </collision>
+	<xacro:inertial_matrix mass="50"/>
+  </link>
+
+  <gazebo reference="base_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+<!-- torso LINK -->
+  <xacro:link_shape name="torso_link" color="White">
+	<origin xyz="0 0 ${TORSO_HEIGHT/2}" rpy="0 0 0" />
+	<box size="${TORSO_DEPTH} ${TORSO_LENGTH} ${TORSO_HEIGHT}" />
+  </xacro:link_shape>
+
+  <gazebo reference="torso_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+
+<!-- ////////////////// right side /////////////// -->
+<!-- arm -->
+  <xacro:arm side="r" 
+	     axis_y_signal="-1"
+	     lower="0"
+	     upper="1" />
+
+<!-- hand -->
+  <xacro:hand side="r" 
+		axis_y_signal="-1" />
+
+<!-- /////////////////	END MODEL	//////////////////////// -->
+
+</robot>

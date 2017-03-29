@@ -1,0 +1,224 @@
+<?xml version="1.0"?>
+
+<robot name="signbot_full" xmlns:xacro="http://www.ros.org/wiki/xacro" >
+	<xacro:include filename="$(find signbot_description)/urdf/signbot_full_macros.xacro" />
+
+
+<!-- /////////		MODEL		////////////////////////// -->
+<!-- base link  This link is the base of the model -->
+  <link name="base_link">
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+	       <box size="3 3 0.01" />
+      </geometry>
+      <material name="Black" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+	       <box size="3 3 0.01" />
+      </geometry>
+      </collision>
+  </link>
+
+  <gazebo reference="base_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+ <joint name="bottom_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="base_link"/>
+    <child link="legs_link"/>
+  </joint>
+<!-- legs -->
+  <link name="legs_link">
+
+    <visual>
+      <origin xyz="0 0 ${TORSO_HEIGHT/2}" rpy="0 0 0" />
+      <geometry>
+	       <box size="${TORSO_DEPTH} ${TORSO_LENGTH} ${TORSO_HEIGHT}" />
+      </geometry>
+      <material name="Black" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 ${TORSO_HEIGHT/2}" rpy="0 0 0" />
+      <geometry>
+	       <box size="${TORSO_DEPTH} ${TORSO_LENGTH} ${TORSO_HEIGHT}" />
+      </geometry>
+      </collision>
+	<xacro:inertial_matrix mass="50"/>
+  </link>
+
+  <gazebo reference="legs_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+<!-- torso LINK -->
+  <xacro:link_shape name="torso_link" color="White">
+	<origin xyz="0 0 ${TORSO_HEIGHT/2}" rpy="0 0 0" />
+	<box size="${TORSO_DEPTH} ${TORSO_LENGTH} ${TORSO_HEIGHT}" />
+  </xacro:link_shape>
+
+  <gazebo reference="torso_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+
+ <joint name="waist_joint" type="fixed">
+    <origin xyz="0 0 ${TORSO_HEIGHT}" rpy="0 0 0" />
+    <parent link="legs_link"/>
+    <child link="torso_link"/>
+  </joint>
+
+<!-- //////////////////	head	/////////////////// -->
+<!-- neck -->
+  <xacro:link_shape name="neck_link" color="White">
+	<origin xyz="0 0 ${NECK_LENGTH/2}" rpy="0 0 0" />
+	<cylinder radius="${NECK_RADIUS}" length="${NECK_LENGTH}"/>
+  </xacro:link_shape>
+
+  <gazebo reference="neck_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+
+ <joint name="neck_joint" type="fixed">
+    <origin xyz="0 0 ${TORSO_HEIGHT}" rpy="0 0 0" />
+    <parent link="torso_link"/>
+    <child link="neck_link"/>
+  </joint>
+
+<!-- head  -->
+  <xacro:link_shape name="head_link" color="White">
+	<origin xyz="0 0 ${HEAD_RADIUS}" rpy="0 0 0" />
+	<sphere radius="${HEAD_RADIUS}"/>
+  </xacro:link_shape>
+
+  <gazebo reference="head_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+
+ <joint name="head_joint" type="fixed">
+    <origin xyz="0 0 ${NECK_LENGTH}" rpy="0 0 0" />
+    <parent link="neck_link"/>
+    <child link="head_link"/>
+  </joint>
+
+<!-- ////////////////// right side /////////////// -->
+<!-- arm -->
+  <xacro:arm side="r" 
+	     axis_y_signal="-1"
+	     lower="0"
+	     upper="1" />
+
+<!-- hand --> 
+  <xacro:hand side="r"
+	      axis_y_signal="-1" />
+<!-- thumb -->
+  <xacro:thumb_finger side="r"
+		      axis_y_signal="-1"
+		      lower="0"
+		      upper="1" />
+
+<!--	FOUR FINGERS	(INDEX, MIDDLE, THIRD, LITTLE)-->
+  <xacro:generic_finger name= "index" 
+			side="r"
+			axis_y_signal="-1"
+		      	lower="0"
+		     	upper="1" 
+			ref_point="${(PALM_LENGTH/2)-GENERIC_FINGERS_RADIUS}" 
+			bottom_length="${INDEX_BOTTOM_LENGTH}" 
+			middle_length="${INDEX_MIDDLE_LENGTH}"
+			top_length="${INDEX_TOP_LENGTH}" />
+
+  <xacro:generic_finger name= "middle" 
+			side="r"
+			axis_y_signal="-1"
+		      	lower="0"
+		     	upper="1"  
+			ref_point="${(PALM_LENGTH/2)-GENERIC_FINGERS_RADIUS*3-INTERVAL_BETWEEN_FINGERS}" 
+			bottom_length="${MIDDLE_BOTTOM_LENGTH}" 
+			middle_length="${MIDDLE_MIDDLE_LENGTH}"
+			top_length="${MIDDLE_TOP_LENGTH}" />
+
+  <xacro:generic_finger name= "third" 
+			side="r"
+			axis_y_signal="-1"
+		      	lower="0"
+		     	upper="1"  
+			ref_point="${(PALM_LENGTH/2)-GENERIC_FINGERS_RADIUS*5-INTERVAL_BETWEEN_FINGERS*2}" 
+			bottom_length="${THIRD_BOTTOM_LENGTH}" 
+			middle_length="${THIRD_MIDDLE_LENGTH}"
+			top_length="${THIRD_TOP_LENGTH}" />
+
+  <xacro:generic_finger name= "little" 
+			side="r"
+			axis_y_signal="-1"
+		      	lower="0"
+		     	upper="1"  
+			ref_point="${(PALM_LENGTH/2)-GENERIC_FINGERS_RADIUS*7-INTERVAL_BETWEEN_FINGERS*3}" 
+			bottom_length="${LITTLE_BOTTOM_LENGTH}" 
+			middle_length="${LITTLE_MIDDLE_LENGTH}"
+			top_length="${LITTLE_TOP_LENGTH}" />
+-->
+<!-- ////////////////// left side /////////////// -->
+<!-- arm -->
+  <xacro:arm side="l" 
+	     axis_y_signal="1"
+	     lower="1"
+	     upper="0" />
+<!-- hand --> 
+  <xacro:hand side="l"
+	      axis_y_signal="1" />
+<!-- thumb -->
+  <xacro:thumb_finger side="l"
+		      axis_y_signal="1"
+		      lower="1"
+		      upper="0" />
+<!--	FOUR FINGERS	(INDEX, MIDDLE, THIRD, LITTLE) -->
+
+  <xacro:generic_finger name= "index" 
+			side="l"
+			axis_y_signal="1"
+		      	lower="1"
+		     	upper="0"  
+			ref_point="${(PALM_LENGTH/2)-GENERIC_FINGERS_RADIUS}" 
+			bottom_length="${INDEX_BOTTOM_LENGTH}" 
+			middle_length="${INDEX_MIDDLE_LENGTH}"
+			top_length="${INDEX_TOP_LENGTH}" />
+
+  <xacro:generic_finger name= "middle" 
+			side="l"
+			axis_y_signal="1"
+		      	lower="1"
+		     	upper="0"   
+			ref_point="${(PALM_LENGTH/2)-GENERIC_FINGERS_RADIUS*3-INTERVAL_BETWEEN_FINGERS}" 
+			bottom_length="${MIDDLE_BOTTOM_LENGTH}" 
+			middle_length="${MIDDLE_MIDDLE_LENGTH}"
+			top_length="${MIDDLE_TOP_LENGTH}" />
+
+  <xacro:generic_finger name= "third" 
+			side="l"
+			axis_y_signal="1"
+		      	lower="1"
+		     	upper="0"   
+			ref_point="${(PALM_LENGTH/2)-GENERIC_FINGERS_RADIUS*5-INTERVAL_BETWEEN_FINGERS*2}" 
+			bottom_length="${THIRD_BOTTOM_LENGTH}" 
+			middle_length="${THIRD_MIDDLE_LENGTH}"
+			top_length="${THIRD_TOP_LENGTH}" />
+
+  <xacro:generic_finger name= "little" 
+			side="l"
+			axis_y_signal="1"
+		      	lower="1"
+		     	upper="0"  
+			ref_point="${(PALM_LENGTH/2)-GENERIC_FINGERS_RADIUS*7-INTERVAL_BETWEEN_FINGERS*3}" 
+			bottom_length="${LITTLE_BOTTOM_LENGTH}" 
+			middle_length="${LITTLE_MIDDLE_LENGTH}"
+			top_length="${LITTLE_TOP_LENGTH}" />
+
+<!-- /////////////////	END MODEL	//////////////////////// -->
+	
+</robot>
