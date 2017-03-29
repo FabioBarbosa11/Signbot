@@ -1,0 +1,18 @@
+controller_list:
+  - name: "signbot/l_arm_controller"
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    joints:
+     - l_shoulder_joint
+     - l_top_arm_joint
+     - l_elbow_joint
+     - l_wrist_joint
+
+  - name: "signbot/r_arm_controller"
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    joints:
+     - r_shoulder_joint
+     - r_top_arm_joint
+     - r_elbow_joint
+     - r_wrist_joint
