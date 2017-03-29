@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<launch>
+<!-- index finger -->
+	<rosparam file="$(find hand_gazebo)/controller/finger_index_control.yaml" command="load"/>
+
+  <node name="finger_index_controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+    output="screen" ns="/hand" args="finger/index_controller"/>
+
+<!-- little finger -->
+	<rosparam file="$(find hand_gazebo)/controller/finger_little_control.yaml" command="load"/>
+
+  <node name="finger_little_controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+    output="screen" ns="/hand" args="finger/little_controller"/>
+
+<!-- middle finger -->
+	<rosparam file="$(find hand_gazebo)/controller/finger_middle_control.yaml" command="load"/>
+
+  <node name="finger_middle_controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+    output="screen" ns="/hand" args="finger/middle_controller"/>
+
+<!-- third finger -->
+	<rosparam file="$(find hand_gazebo)/controller/finger_third_control.yaml" command="load"/>
+
+  <node name="finger_third_controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+    output="screen" ns="/hand" args="finger/third_controller"/>
+
+<!-- thumb finger -->
+	<rosparam file="$(find hand_gazebo)/controller/finger_thumb_control.yaml" command="load"/>
+
+  <node name="finger_thumb_controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+    output="screen" ns="/hand" args="finger/thumb_controller"/>
+
+</launch>

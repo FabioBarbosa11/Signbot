@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<launch>
+	<include file="$(find hand_gazebo)/launch/hand_world.launch" /> 
+
+	<include file="$(find hand_gazebo)/launch/joint_state_controller.launch" /> 
+	<include file="$(find hand_gazebo)/launch/palm_controller.launch" /> 
+	<include file="$(find hand_gazebo)/launch/fingers_controller.launch" /> 	
+</launch>

@@ -1,0 +1,31 @@
+controller_list:
+  - name: fake_palm_controller
+    joints:
+      - virtual_joint
+      - r_wirst_j
+      - r_upper_wirst_j
+  - name: fake_thumb_finger_controller
+    joints:
+      - r_knuckle_bottom_thumb_j
+      - r_knuckle_upper_thumb_j
+      - r_middle_thumb_j
+  - name: fake_index_finger_controller
+    joints:
+      - r_knuckle_bottom_index_j
+      - r_middle_index_j
+      - r_top_index_j
+  - name: fake_middle_finger_controller
+    joints:
+      - r_knuckle_bottom_middle_j
+      - r_middle_middle_j
+      - r_top_middle_j
+  - name: fake_third_finger_controller
+    joints:
+      - r_knuckle_bottom_third_j
+      - r_middle_third_j
+      - r_top_third_j
+  - name: fake_little_finger_controller
+    joints:
+      - r_knuckle_bottom_little_j
+      - r_middle_little_j
+      - r_top_little_j
