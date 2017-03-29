@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<launch>
+	<include file="$(find signbot_full_gazebo)/launch/signbot_full_world.launch" /> 
+
+	<include file="$(find signbot_full_gazebo)/launch/joint_state_controller.launch" /> 
+	<include file="$(find signbot_full_gazebo)/launch/left_side_controller.launch" /> 
+	<include file="$(find signbot_full_gazebo)/launch/right_side_controller.launch" /> 	
+</launch>

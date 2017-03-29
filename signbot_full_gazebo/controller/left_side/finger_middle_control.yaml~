@@ -1,0 +1,13 @@
+hand:
+  finger/middle_controller:
+    type: position_controllers/JointTrajectoryController
+    joints:
+     - l_knuckle_bottom_middle_j
+     - l_middle_middle_j
+     - l_top_middle_j
+
+    gains:
+      l_knuckle_bottom_middle_j:   {p: 100.0, i: 0.01, d: 10.0, i_clamp: 0.0}
+      l_middle_middle_j:    {p: 100.0, i: 0.01, d: 10.0, i_clamp: 0.0}
+      l_top_middle_j:      {p: 100.0, i: 0.01, d: 10.0, i_clamp: 0.0}
+

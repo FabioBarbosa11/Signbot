@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<launch>
+	<include file="$(find signbot_12_gazeit)/launch/signbot_12_world.launch" /> 
+
+	<include file="$(find signbot_12_gazeit)/launch/joint_state_controller.launch" /> 
+	<include file="$(find signbot_12_gazeit)/launch/l_controller.launch" /> 
+	<include file="$(find signbot_12_gazeit)/launch/r_controller.launch" /> 	
+</launch>

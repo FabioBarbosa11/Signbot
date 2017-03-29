@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<launch>
+<!-- arm -->
+	<rosparam file="$(find signbot_full_gazebo)/controller/right_side/r_arm_control.yaml" command="load"/>
+
+	<node name="r_arm_controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+		output="screen" ns="/signbot" args="right/arm_controller"/>
+
+<!-- palm -->
+	<rosparam file="$(find signbot_full_gazebo)/controller/right_side/palm_control.yaml" command="load"/>
+
+	<node name="r_palm_controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+		output="screen" ns="/signbot" args="right/hand/palm_controller"/>
+
+<!-- fingers -->
+	<include file="$(find signbot_full_gazebo)/launch/right_fingers_controller.launch" /> 
+
+</launch>
