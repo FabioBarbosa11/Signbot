@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<launch>
+	<rosparam file="$(find signbot_2arms_gazebo)/controller/l_control.yaml" command="load"/>
+
+	<node name="l_controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+		output="screen" ns="/signbot" args="l_arm_controller"/>
+
+</launch>

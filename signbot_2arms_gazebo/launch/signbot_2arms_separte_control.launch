@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<launch>
+	<include file="$(find signbot_2arms_gazebo)/launch/signbot_2arms_world.launch" /> 
+
+	<include file="$(find signbot_2arms_gazebo)/launch/joint_state_controller.launch" /> 
+	<include file="$(find signbot_2arms_gazebo)/launch/l_controller.launch" /> 
+	<include file="$(find signbot_2arms_gazebo)/launch/r_controller.launch" />
+</launch>
