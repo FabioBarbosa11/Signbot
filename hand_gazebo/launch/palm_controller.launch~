@@ -1,8 +1,0 @@
-<?xml version="1.0" ?>
-<launch>
-	<rosparam file="$(find hand_gazebo)/controller/palm_control.yaml" command="load"/>
-
-	<node name="l_controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
-		output="screen" ns="/hand" args="palm_control"/>
-
-</launch>
