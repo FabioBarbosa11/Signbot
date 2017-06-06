@@ -1,11 +1,8 @@
-##################### 08/03/2017  ################################
+##################### 06/06/2017  ################################
 Agora so devera haver como funcionais:
 
 Signbot_description:
 	onde estao os urdfs/xacros todos 
-
-Signbot_planning:
-	Planeamento de trajetorias via c++ e visualizados no moveit
 
 Signbot_hands:
 	modelo da mao direita
@@ -14,14 +11,14 @@ Siignbot_2arms:
 	modelo so com os 2 braços.
 ------------------------
 NOTA:
-	estou neste momento a trabalhar com ele para conseguir fazer planeamento com ele
+  testar controlar atraves de topicos/subscriçoes
 ------------------------
 
 Signbot_full:
 	Modelo final do robo
 -----------------
 NOTA:
-	tenho no caderno novas ideias para por o robo mais realistico
+        é preciso refaze-lo. DOF's em falta
 ----------------
 
 ##############################################################
