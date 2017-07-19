@@ -10,7 +10,10 @@ project(signbot_trajetory)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
-)
+  trajectory_msgs
+  ##sensor_msgs
+  ##std_srvs
+  )
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -104,7 +107,12 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES signbot_trajetory
-CATKIN_DEPENDS roscpp rospy
+CATKIN_DEPENDS
+      roscpp
+      rospy
+      trajectory_msgs
+      ##sensor_msgs
+      ##std_srvs
 #  DEPENDS system_lib
 )
 
@@ -114,10 +122,7 @@ CATKIN_DEPENDS roscpp rospy
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-include_directories(
-# include
-  ${catkin_INCLUDE_DIRS}
-)
+include_directories(include ${catkin_INCLUDE_DIRS})
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
@@ -133,22 +138,13 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(trajectory_test_node src/test_left_arm_trajetory.cpp)
-
-## Rename C++ executable without prefix
-## The above recommended prefix causes long target names, the following renames the
-## target back to the shorter version for ease of user use
-## e.g. "rosrun someones_pkg node" instead of "rosrun someones_pkg someones_pkg_node"
-# set_target_properties(${PROJECT_NAME}_node PROPERTIES OUTPUT_NAME node PREFIX "")
-
+add_executable(sub_then_pub_node src/sub_then_pub.cpp)
 ## Add cmake target dependencies of the executable
-## same as for the library above
-add_dependencies(trajectory_test_node
-                  trajectory_test_cpp)
-
+add_dependencies(trajectory_test_node trajectory_test_cpp)
+add_dependencies(sub_then_pub_node   sub_then_pub_cpp)
 ## Specify libraries to link a library or executable target against
-target_link_libraries(trajectory_test_node
-   ${catkin_LIBRARIES}
- )
+target_link_libraries(trajectory_test_node ${catkin_LIBRARIES})
+target_link_libraries(sub_then_pub_node ${catkin_LIBRARIES})
 
 #############
 ## Install ##
