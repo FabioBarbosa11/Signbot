@@ -9,16 +9,13 @@ Signbot_hands:
 
 Siignbot_2arms:
 	modelo so com os 2 braços.
-------------------------
-NOTA:
-  testar controlar atraves de topicos/subscriçoes
-------------------------
+
+Signbot_trajectory:
+        codigos sobre movimento de gestos.
+        codigos simples com um comando destino apenas: um so com pub e ouro com sub e pub
+        estao toso funcionais
 
 Signbot_full:
-	Modelo final do robo
------------------
-NOTA:
-        é preciso refaze-lo. DOF's em falta
-----------------
+        Modelo final do robo (esta mal implementado, falta dof's -> tenho outro workspace mais limpo e com tudo)
 
 ##############################################################
