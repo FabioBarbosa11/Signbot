@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<launch>
+        <include file="$(find rev_arm_gazebo)/launch/rev_arm_world.launch" />
+
+        <include file="$(find rev_arm_gazebo)/launch/joint_state_controller.launch" />
+        <include file="$(find rev_arm_gazebo)/launch/arm_controller.launch" />
+</launch>

@@ -1,0 +1,301 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http:***www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find signbot_f_description)/urdf/signbot.gazebo" />
+<xacro:include filename="$(find signbot_f_description)/urdf/materials.xacro" />
+
+
+<!-- ******************************************************************************************** -->
+<!-- **************************************** Constants ***************************************** -->
+<!-- ******************************************************************************************** -->
+
+  <property name="PI" value="3.14159"/>
+  <property name="TOLERANCE" value="0.001" />
+
+  <property name="HEAVYWEIGHT" value="50" />
+  <property name="LIGHTWEIGHT" value="1" />
+
+<!-- Torso Constants -->
+  <property name="TORSO_DEPTH" value="0.6" />
+  <property name="TORSO_LENGTH" value="1.4"/>
+  <property name="TORSO_HEIGHT" value="1.6"/>
+
+<!-- Neck constants -->
+  <property name="NECK_RADIUS" value="0.2" />
+  <property name="NECK_LENGTH" value="0.2"/>
+
+<!-- head constants -->
+  <property name="HEAD_RADIUS" value="0.4"/>
+
+<!-- arm link properties -->
+  <property name="ARM_RADIUS" value="0.2" />
+  <property name="ARM_TOP_LENGTH" value="0.6" />
+  <property name="ARM_BOTTOM_LENGTH" value="0.7" />
+
+<!-- wrist link properties -->
+  <property name="WRIST_RADIUS" value="${ARM_RADIUS}" />
+
+<!-- palm link properties -->
+  <property name="PALM_DEPTH" value="${WRIST_RADIUS}" />
+  <property name="PALM_LENGTH" value="0.43"/>
+  <property name="PALM_HEIGHT" value="0.35"/>
+
+<!-- thumb finger properties -->
+  <property name="THUMB_RADIUS" value="0.06" />
+  <property name="THUMB_BOTTOM_LENGTH" value="0.11" />
+  <property name="THUMB_TOP_LENGTH" value="${THUMB_RADIUS}" />
+
+<!-- generic fingers properties -->
+  <property name="GENERIC_FINGERS_RADIUS" value="0.05" />
+  <property name="GENERIC_FINGERS_X" value="0.027" />
+  <property name="INTERVAL_BETWEEN_FINGERS" value="0.01" />
+
+<!-- index finger properties -->
+  <property name="INDEX_BOTTOM_LENGTH" value="0.1" />
+  <property name="INDEX_MIDDLE_LENGTH" value="0.09" />
+  <property name="INDEX_TOP_LENGTH" value="${GENERIC_FINGERS_RADIUS}" />
+
+<!--  middle finger properties  -->
+  <property name="MIDDLE_BOTTOM_LENGTH" value="0.12" />
+  <property name="MIDDLE_MIDDLE_LENGTH" value="0.11" />
+  <property name="MIDDLE_TOP_LENGTH" value="${GENERIC_FINGERS_RADIUS}" />
+
+<!--  third finger properties  -->
+  <property name="THIRD_BOTTOM_LENGTH" value="0.1" />
+  <property name="THIRD_MIDDLE_LENGTH" value="0.1" />
+  <property name="THIRD_TOP_LENGTH" value="${GENERIC_FINGERS_RADIUS}" />
+
+<!--  little finger properties  -->
+  <property name="LITTLE_BOTTOM_LENGTH" value="0.075" />
+  <property name="LITTLE_MIDDLE_LENGTH" value="0.075" />
+  <property name="LITTLE_TOP_LENGTH" value="${GENERIC_FINGERS_RADIUS}" />
+
+<!-- ******************************************************************************************** -->
+<!-- ***************************/ Blocks of code ************************************************ -->
+<!-- ******************************************************************************************** -->
+
+<xacro:macro name="inertial_matrix" params="mass">
+  <inertial>
+    <mass value="${mass}" />
+    <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0" />
+  </inertial>
+</xacro:macro>
+
+<xacro:macro name="transmission_block" params="joint_name">
+  <transmission name="tran1">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="${joint_name}">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor1">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+</xacro:macro>
+
+<!-- ****************************** LINK SHAPES	************************************************* -->
+<xacro:macro name="link_shape" params="name color *origin *shape mass">
+  <link name="${name}">
+    <visual>
+       <xacro:insert_block name="origin" />
+        <geometry>
+            <xacro:insert_block name="shape" />
+        </geometry>
+        <material name="${color}" />
+    </visual>
+    <collision>
+       <xacro:insert_block name="origin" />
+        <geometry>
+            <xacro:insert_block name="shape" />
+        </geometry>
+    </collision>
+    <xacro:inertial_matrix mass="${mass}"/>
+  </link>
+</xacro:macro>
+
+
+<!-- ******************************************************************************************** -->
+<!-- ************************************** TORSO_HEAD ****************************************** -->
+<!-- ******************************************************************************************** -->
+
+<xacro:macro name="torso_head" params="parentl_name">
+  <joint name="ankle_joint" type="fixed">
+     <origin xyz="0 0 0" rpy="0 0 0" />
+     <parent link="${parentl_name}"/>
+     <child link="legs_link"/>
+  </joint>
+
+  <xacro:link_shape name="legs_link" color="Black"  mass="${HEAVYWEIGHT}" >
+                    <origin xyz="0 0 ${TORSO_HEIGHT/2}" rpy="0 0 0" />
+                    <box size="${TORSO_DEPTH} ${TORSO_LENGTH} ${TORSO_HEIGHT}" />
+  </xacro:link_shape>
+  <xacro:gazebo_black name="legs_link" />
+
+  <!-- ************************************ TORSO LINK ****************************************** -->
+  <joint name="waist_joint" type="fixed">
+    <origin xyz="0 0 ${TORSO_HEIGHT}" rpy="0 0 0" />
+    <parent link="legs_link"/>
+    <child link="torso_link"/>
+  </joint>
+
+  <xacro:link_shape name="torso_link" color="White" mass="${LIGHTWEIGHT}" >
+        <origin xyz="0 0 ${TORSO_HEIGHT/2}" rpy="0 0 0" />
+        <box size="${TORSO_DEPTH} ${TORSO_LENGTH} ${TORSO_HEIGHT}" />
+  </xacro:link_shape>
+  <xacro:gazebo_white name="torso_link" />
+
+  <!-- ************************************** NECK LINK ***************************************** -->
+  <joint name="neck_joint" type="fixed">
+    <origin xyz="0 0 ${TORSO_HEIGHT}" rpy="0 0 0" />
+    <parent link="torso_link"/>
+    <child link="neck_link"/>
+  </joint>
+
+  <xacro:link_shape name="neck_link" color="White" mass="${LIGHTWEIGHT}">
+        <origin xyz="0 0 ${NECK_LENGTH/2}" rpy="0 0 0" />
+        <cylinder radius="${NECK_RADIUS}" length="${NECK_LENGTH}"/>
+  </xacro:link_shape>
+  <xacro:gazebo_white name="neck_link" />
+
+  <!-- ************************************* HEAD LINK ****************************************** -->
+  <joint name="head_joint" type="fixed">
+     <origin xyz="0 0 ${NECK_LENGTH}" rpy="0 0 0" />
+     <parent link="neck_link"/>
+     <child link="head_link"/>
+  </joint>
+
+  <xacro:link_shape name="head_link" color="White" mass="${LIGHTWEIGHT}">
+        <origin xyz="0 0 ${HEAD_RADIUS}" rpy="0 0 0" />
+        <sphere radius="${HEAD_RADIUS}"/>
+  </xacro:link_shape>
+  <xacro:gazebo_white name="head_link" />
+
+</xacro:macro>
+
+<!-- ******************************************************************************************** -->
+<!-- ****************************************** ARMS ******************************************** -->
+<!-- ******************************************************************************************** -->
+
+<!-- ********************************************************************************************
+      FAZER UMA NOVA VERSAO, CASO O DA REVOLUÇAO NAO DER CERTO!!!!!!
+      TOMAR ATENÇAO AOS NOMES.
+      SERA PRECISO  INCREMENTAR UM NOVO LINK! PARA O OMBRO TER 3DOF'S
+      ******************************************************************************************* -->
+
+<!-- ********************************* SHOULDER PAN LINK ****************************************
+  <xacro:link_shape name="${side}_shoulder_link" color="Blue" mass="${LIGHTWEIGHT}">
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <sphere radius="${ARM_RADIUS}"/>
+  </xacro:link_shape>
+
+  <gazebo reference="${side}_shoulder_link">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+
+  <joint name="${side}_shoulder_joint" type="revolute">
+    <parent link="torso_link"/>
+    <child link="${side}_shoulder_link"/>
+    <origin xyz="0 ${axis_y_signal*((TORSO_LENGTH/2)+ARM_RADIUS)} ${TORSO_HEIGHT-ARM_RADIUS}"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="1000.0" lower="-${PI/2}" upper="${PI/2}" velocity="0.5"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+<!-- ****************************************** TOP ARM *****************************************
+  <xacro:link_shape name="${side}_top_arm_link" color="White" mass="${LIGHTWEIGHT}">
+        <origin rpy="${PI/2} 0 0" xyz="0 ${axis_y_signal*(ARM_TOP_LENGTH/2)} 0"/>
+        <cylinder radius="${ARM_RADIUS}" length="${ARM_TOP_LENGTH}"/>
+  </xacro:link_shape>
+
+  <gazebo reference="${side}_top_arm_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+
+  <joint name="${side}_top_arm_joint" type="revolute">
+    <parent link="${side}_shoulder_link"/>
+    <child link="${side}_top_arm_link"/>
+    <origin xyz="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="1000.0" lower="${lower*(-1*(PI/2))}" upper="${upper*(PI/2)}" velocity="0.5"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+<!-- ****************************************** BOTTOM ARM **************************************
+  <xacro:link_shape name="${side}_bottom_arm_link" color="White" mass="${LIGHTWEIGHT}">
+         <origin rpy="${PI/2} 0 0" xyz="-${ARM_RADIUS} ${axis_y_signal*(ARM_BOTTOM_LENGTH/2)} 0"/>
+         <cylinder radius="${ARM_RADIUS}" length="${ARM_BOTTOM_LENGTH}"/>
+  </xacro:link_shape>
+
+  <gazebo reference="${side}_bottom_arm_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+
+  <joint name="${side}_elbow_joint" type="revolute">
+    <parent link="${side}_top_arm_link"/>
+    <child link="${side}_bottom_arm_link"/>
+    <origin xyz="${ARM_RADIUS} ${axis_y_signal*(ARM_TOP_LENGTH)} 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="1000.0" lower="${lower*(-1)*(PI-0.4)}" upper="${upper*(PI-0.4)}" velocity="0.5"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+<!-- ************************************** TRANSMICION ROS CONTROL ****************************
+        <xacro:transmission_block joint_name="${side}_shoulder_joint"/>
+        <xacro:transmission_block joint_name="${side}_top_arm_joint"/>
+        <xacro:transmission_block joint_name="${side}_elbow_joint"/>
+-->
+
+</xacro:macro>
+
+<!-- ******************************************************************************************** -->
+<!-- ****************************************** HAND ******************************************** -->
+<!-- ******************************************************************************************** -->
+
+<xacro:macro name="hand" params="side axis_y_signal">
+<!-- ***************************************** WIRST ******************************************** -->
+  <xacro:link_shape name="${side}_wirst_l" color="Blue" mass="${LIGHTWEIGHT}">
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <sphere radius="${WRIST_RADIUS}"/>
+  </xacro:link_shape>
+
+  <gazebo reference="${side}_wirst_l">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+
+  <joint name="${side}_wirst_j" type="revolute">
+    <parent link="${side}_bottom_arm_link"/>
+    <child link="${side}_wirst_l"/>
+    <origin xyz="-${ARM_RADIUS} ${axis_y_signal*ARM_BOTTOM_LENGTH} 0"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="1000.0" lower="-${PI/4}" upper="${PI/4}" velocity="0.5"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+<!-- ****************************************** PALM LINK *************************************** -->
+  <xacro:link_shape name="${side}_palm_l" color="White" mass="${LIGHTWEIGHT}">
+        <origin rpy="${PI/2} 0 0" xyz="0 ${axis_y_signal*0.17} 0 "/>
+        <box size="${PALM_DEPTH} ${PALM_LENGTH} ${PALM_HEIGHT}"/>
+  </xacro:link_shape>
+
+  <gazebo reference="${side}_palm_l">
+    <material>Gazebo/White</material>
+  </gazebo>
+
+  <joint name="${side}_upper_wirst_j" type="revolute">
+    <parent link="${side}_wirst_l"/>
+    <child link="${side}_palm_l"/>
+    <origin xyz="0 ${axis_y_signal*0.10} 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="1000.0" lower="-${PI/4}" upper="${PI/4}" velocity="0.5"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+<!--************************************** TRANSMICION ROS CONTROL ****************************** -->
+   <xacro:transmission_block joint_name="${side}_wirst_j"/>
+   <xacro:transmission_block joint_name="${side}_upper_wirst_j"/>
+
+</xacro:macro>
+
+
+</robot>

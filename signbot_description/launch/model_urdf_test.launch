@@ -11,11 +11,12 @@
   <node name="robot_state_publisher" 
         pkg="robot_state_publisher" 
         type="state_publisher" />
- 
+
+    <!-- Custom proprities in Rviz   -->
   <node name="rviz" 
-	pkg="rviz" 
-	type="rviz" 
-	args="-d $(find proto_signbot_description)/urdf.rviz" 
-	required="true" />
+        pkg="rviz" 
+        type="rviz" 
+        args="-d $(find signbot_description)/launch/signbot_urdf.rviz"
+        required= "true"  />
 
 </launch>

@@ -5,7 +5,7 @@
 <arg name="rvizconfig" default="$(find urdf_tutorial)/urdf.rviz" />
 <!-- Parsing xacro and loading robot_description parameter -->
 <param name="robot_description" 
-        command="$(find xacro)/xacro.py $(find signbot_description)/urdf/revolute_arm.xacro" />
+        command="$(find xacro)/xacro.py $(find signbot_f_description)/urdf/signbot.xacro" />
 
 <!-- Setting gui parameter to true for display joint slider, for getting joint control -->
 <param name="use_gui" value="true"/>
@@ -16,21 +16,15 @@
       type="joint_state_publisher" />
 
 <!-- Starting robot state publish which will publish current robot joint states using tf -->
-<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+<node name="robot_state_publisher" 
+	pkg="robot_state_publisher" 
+	type="state_publisher" />
 
-<!-- Launch visualization in rviz
-     ******************** GENERIC *************************************
+<!-- Custom visualization proprities in Rviz   -->
 <node name="rviz" 
-	pkg="rviz" 
-	type="rviz" 
-	args="-d $(arg rvizconfig)"
-	required="true" />
-      ****************** COSTUM PROPRITIES **************************** -->
-<node name="rviz"
-        pkg="rviz"
-        type="rviz"
-        args="-d $(find signbot_description)/launch/signbot_proprities.rviz"
-        required="true" />
-
+    pkg="rviz" 
+    type="rviz" 
+    args="-d $(find signbot_f_description)/launch/signbot.rviz"
+    required= "true"  />
 
 </launch>

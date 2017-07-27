@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<robot name="signbot"
+       xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+<xacro:include filename="$(find signbot_f_description)/urdf/macros.xacro" />
+
+<!-- ***************************************************************************** -->
+<!-- ****************************** MODEL **************************************** -->
+<!-- ***************************************************************************** -->
+<xacro:link_shape name="base_link" color="Black"  mass="${HEAVYWEIGHT}" >
+                  <origin xyz="0 0 0" rpy="0 0 0" />
+                  <box size="3 3 0.01" />
+</xacro:link_shape>
+<xacro:gazebo_black name="base_link" />
+
+<!-- ************************** LEG TOSRO AND HEAD ******************************* -->
+<xacro:torso_head parentl_name="base_link" />
+
+<!-- ****************************** RIGHT SIDE *********************************** -->
+<!-- ******************************* RIGHT ARM *********************************** -->
+  <xacro:arm side="r"
+             axis_y_signal="-1"
+             lower="0"
+             upper="1" />
+
+<!-- *********************************** HAND ************************************ -->
+  <!--<xacro:hand side="r"
+              axis_y_signal="-1" />
+-->
+</robot>

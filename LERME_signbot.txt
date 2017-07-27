@@ -1,8 +1,10 @@
-##################### 06/06/2017  ################################
-Agora so devera haver como funcionais:
-
 Signbot_description:
-	onde estao os urdfs/xacros todos 
+        onde estao os urdfs/xacros todos. Contem:
+                                                  revolute_arm
+                                                  singbot_1
+                                                  signbot_2arms
+                                                  signbot_full
+                                                  signbot_hand
 
 Signbot_hands:
 	modelo da mao direita
@@ -18,4 +20,11 @@ Signbot_trajectory:
 Signbot_full:
         Modelo final do robo (esta mal implementado, falta dof's -> tenho outro workspace mais limpo e com tudo)
 
-##############################################################
+Signbot_final:
+        Sera onde ira conter o projeto final.
+********Trabalhar com este quando todos os testes foram feitos.
+
+rev_arm:
+      package criado para testar como seria se o ombro tivesse joint revolute 6DOF em vez de ter varios joints
+      revolute especificado para cada um DOF.
+******CONCLUI-SE que é mau optar por este meio, e que o melhor seria usar 3 joints especicado para 1 DOF apenas!!!!!

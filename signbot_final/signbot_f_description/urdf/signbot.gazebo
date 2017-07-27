@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<!-- ros_control plugin -->
+<gazebo>
+  <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>/signbot</robotNamespace>
+  </plugin>
+</gazebo>
+
+<!-- ********************************** COLOURS ********************************* -->
+
+<xacro:macro name="gazebo_black" params="name" >
+    <gazebo reference="${name}">
+      <material>Gazebo/Black</material>
+    </gazebo>
+</xacro:macro>
+
+<xacro:macro name="gazebo_white" params="name" >
+    <gazebo reference="${name}">
+      <material>Gazebo/White</material>
+    </gazebo>
+</xacro:macro>
+
+</robot>
