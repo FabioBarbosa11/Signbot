@@ -69,6 +69,71 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        l_arm_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_bottom_knuckle_thumb_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_bottom_thumb_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_elbow_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_forearm_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_middle_knuckle_thumb_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_middle_thumb_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_palm_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_shoulder1_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_shoulder2_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_top_thumb_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_wirst1_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_wirst2_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         legs_link:
           Alpha: 1
           Show Axes: false
@@ -79,7 +144,207 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        r_arm_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_bottom_index_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_bottom_knuckle_index_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_bottom_knuckle_little_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_bottom_knuckle_middle_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_bottom_knuckle_third_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_bottom_knuckle_thumb_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_bottom_little_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_bottom_middle_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_bottom_third_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_bottom_thumb_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_elbow_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_forearm_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_middle_index_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_middle_knuckle_index_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_middle_knuckle_little_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_middle_knuckle_middle_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_middle_knuckle_third_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_middle_knuckle_thumb_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_middle_little_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_middle_middle_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_middle_third_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_middle_thumb_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_palm_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         r_shoulder1_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_shoulder2_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_top_index_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_top_knuckle_index_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_top_knuckle_little_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_top_knuckle_middle_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_top_knuckle_third_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_top_little_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_top_middle_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_top_third_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_top_thumb_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_toptop_index_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_toptop_little_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_toptop_middle_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_toptop_third_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_wirst1_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_wirst2_l:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -104,15 +369,121 @@ Visualization Manager:
           Value: true
         head_link:
           Value: true
+        l_arm_link:
+          Value: true
+        l_bottom_knuckle_thumb_l:
+          Value: true
+        l_bottom_thumb_l:
+          Value: true
+        l_elbow_link:
+          Value: true
+        l_forearm_link:
+          Value: true
+        l_middle_knuckle_thumb_l:
+          Value: true
+        l_middle_thumb_l:
+          Value: true
+        l_palm_l:
+          Value: true
+        l_shoulder1_link:
+          Value: true
+        l_shoulder2_link:
+          Value: true
+        l_top_thumb_l:
+          Value: true
+        l_wirst1_l:
+          Value: true
+        l_wirst2_l:
+          Value: true
         legs_link:
           Value: true
         neck_link:
           Value: true
+        r_arm_link:
+          Value: true
+        r_bottom_index_l:
+          Value: true
+        r_bottom_knuckle_index_l:
+          Value: true
+        r_bottom_knuckle_little_l:
+          Value: true
+        r_bottom_knuckle_middle_l:
+          Value: true
+        r_bottom_knuckle_third_l:
+          Value: true
+        r_bottom_knuckle_thumb_l:
+          Value: true
+        r_bottom_little_l:
+          Value: true
+        r_bottom_middle_l:
+          Value: true
+        r_bottom_third_l:
+          Value: true
+        r_bottom_thumb_l:
+          Value: true
+        r_elbow_link:
+          Value: true
+        r_forearm_link:
+          Value: true
+        r_middle_index_l:
+          Value: true
+        r_middle_knuckle_index_l:
+          Value: true
+        r_middle_knuckle_little_l:
+          Value: true
+        r_middle_knuckle_middle_l:
+          Value: true
+        r_middle_knuckle_third_l:
+          Value: true
+        r_middle_knuckle_thumb_l:
+          Value: true
+        r_middle_little_l:
+          Value: true
+        r_middle_middle_l:
+          Value: true
+        r_middle_third_l:
+          Value: true
+        r_middle_thumb_l:
+          Value: true
+        r_palm_l:
+          Value: true
         r_shoulder1_link:
+          Value: true
+        r_shoulder2_link:
+          Value: true
+        r_top_index_l:
+          Value: true
+        r_top_knuckle_index_l:
+          Value: true
+        r_top_knuckle_little_l:
+          Value: true
+        r_top_knuckle_middle_l:
+          Value: true
+        r_top_knuckle_third_l:
+          Value: true
+        r_top_little_l:
+          Value: true
+        r_top_middle_l:
+          Value: true
+        r_top_third_l:
+          Value: true
+        r_top_thumb_l:
+          Value: true
+        r_toptop_index_l:
+          Value: true
+        r_toptop_little_l:
+          Value: true
+        r_toptop_middle_l:
+          Value: true
+        r_toptop_third_l:
+          Value: true
+        r_wirst1_l:
+          Value: true
+        r_wirst2_l:
           Value: true
         torso_link:
           Value: true
-      Marker Scale: 1
+      Marker Scale: 0.1
       Name: TF
       Show Arrows: true
       Show Axes: true
@@ -121,11 +492,69 @@ Visualization Manager:
         base_link:
           legs_link:
             torso_link:
+              l_shoulder1_link:
+                l_shoulder2_link:
+                  l_arm_link:
+                    l_elbow_link:
+                      l_forearm_link:
+                        l_wirst1_l:
+                          l_wirst2_l:
+                            l_palm_l:
+                              l_bottom_knuckle_thumb_l:
+                                l_bottom_thumb_l:
+                                  l_middle_knuckle_thumb_l:
+                                    l_middle_thumb_l:
+                                      l_top_thumb_l:
+                                        {}
               neck_link:
                 head_link:
                   {}
               r_shoulder1_link:
-                {}
+                r_shoulder2_link:
+                  r_arm_link:
+                    r_elbow_link:
+                      r_forearm_link:
+                        r_wirst1_l:
+                          r_wirst2_l:
+                            r_palm_l:
+                              r_bottom_knuckle_index_l:
+                                r_bottom_index_l:
+                                  r_middle_knuckle_index_l:
+                                    r_middle_index_l:
+                                      r_top_knuckle_index_l:
+                                        r_top_index_l:
+                                          r_toptop_index_l:
+                                            {}
+                              r_bottom_knuckle_little_l:
+                                r_bottom_little_l:
+                                  r_middle_knuckle_little_l:
+                                    r_middle_little_l:
+                                      r_top_knuckle_little_l:
+                                        r_top_little_l:
+                                          r_toptop_little_l:
+                                            {}
+                              r_bottom_knuckle_middle_l:
+                                r_bottom_middle_l:
+                                  r_middle_knuckle_middle_l:
+                                    r_middle_middle_l:
+                                      r_top_knuckle_middle_l:
+                                        r_top_middle_l:
+                                          r_toptop_middle_l:
+                                            {}
+                              r_bottom_knuckle_third_l:
+                                r_bottom_third_l:
+                                  r_middle_knuckle_third_l:
+                                    r_middle_third_l:
+                                      r_top_knuckle_third_l:
+                                        r_top_third_l:
+                                          r_toptop_third_l:
+                                            {}
+                              r_bottom_knuckle_thumb_l:
+                                r_bottom_thumb_l:
+                                  r_middle_knuckle_thumb_l:
+                                    r_middle_thumb_l:
+                                      r_top_thumb_l:
+                                        {}
       Update Interval: 0
       Value: true
   Enabled: true
@@ -152,22 +581,22 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 7.95045
+      Distance: 7.10721
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.733813
-        Y: -0.0235447
-        Z: 1.87703
+        X: -0.394891
+        Y: 0.2547
+        Z: 2.32505
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.270398
+      Pitch: 0.100398
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 6.19858
+      Yaw: 0.000405788
     Saved: ~
 Window Geometry:
   Displays:

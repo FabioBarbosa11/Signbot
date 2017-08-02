@@ -16,26 +16,121 @@
 <!-- ************************** LEG TOSRO AND HEAD ******************************* -->
 <xacro:torso_head parentl_name="base_link" />
 
-<!-- ****************************** RIGHT SIDE *********************************** -->
-<!-- ********************************** ARM ************************************** -->
+<!-- ****************************************************************************** -->
+<!-- ****************************** RIGHT SIDE ************************************ -->
+<!-- ****************************************************************************** -->
+
+<!-- ********************************** ARM *************************************** -->
   <xacro:arm side="r"
              axis_y_signal="-1"
              lower="0"
              upper="1" />
-
-<!-- *********************************** HAND ************************************ -->
-  <xacro:hand side="r"
+<!-- *********************************** PALM ************************************* -->
+  <xacro:palm side="r"
               axis_y_signal="-1" />
+<!-- ************************************ THUMB *********************************** -->
+  <xacro:thumb_finger side="r"
+                      axis_y_signal="-1"
+                      lower="0"
+                      upper="1" />
+<!-- **************** FOUR FINGERS (INDEX, MIDDLE, THIRD, LITTLE) ****************** -->
+  <xacro:generic_finger name= "index"
+                        side="r"
+                        axis_y_signal="-1"
+                        lower="0"
+                        upper="1"
+                        ref_point="${(PALM_LENGTH/2)-GENERIC_FINGERS_RADIUS}"
+                        bottom_length="${INDEX_BOTTOM_LENGTH}"
+                        middle_length="${INDEX_MIDDLE_LENGTH}"
+                        top_length="${INDEX_TOP_LENGTH}" />
 
-<!-- ****************************** LEFT SIDE ************************************ -->
-<!-- ********************************** ARM ************************************** -->
+  <xacro:generic_finger name= "middle"
+                        side="r"
+                        axis_y_signal="-1"
+                        lower="0"
+                        upper="1"
+                        ref_point="${(PALM_LENGTH/2)-GENERIC_FINGERS_RADIUS*3-INTERVAL_BETWEEN_FINGERS}"
+                        bottom_length="${MIDDLE_BOTTOM_LENGTH}"
+                        middle_length="${MIDDLE_MIDDLE_LENGTH}"
+                        top_length="${MIDDLE_TOP_LENGTH}" />
+
+  <xacro:generic_finger name= "third"
+                        side="r"
+                        axis_y_signal="-1"
+                        lower="0"
+                        upper="1"
+                        ref_point="${(PALM_LENGTH/2)-GENERIC_FINGERS_RADIUS*5-INTERVAL_BETWEEN_FINGERS*2}"
+                        bottom_length="${THIRD_BOTTOM_LENGTH}"
+                        middle_length="${THIRD_MIDDLE_LENGTH}"
+                        top_length="${THIRD_TOP_LENGTH}" />
+
+  <xacro:generic_finger name= "little"
+                        side="r"
+                        axis_y_signal="-1"
+                        lower="0"
+                        upper="1"
+                        ref_point="${(PALM_LENGTH/2)-GENERIC_FINGERS_RADIUS*7-INTERVAL_BETWEEN_FINGERS*3}"
+                        bottom_length="${LITTLE_BOTTOM_LENGTH}"
+                        middle_length="${LITTLE_MIDDLE_LENGTH}"
+                        top_length="${LITTLE_TOP_LENGTH}" />
+
+<!-- ****************************************************************************** -->
+<!-- ****************************** LEFT SIDE ************************************* -->
+<!-- ****************************************************************************** -->
+
+<!-- ********************************** ARM *************************************** -->
   <xacro:arm side="l"
              axis_y_signal="1"
              lower="1"
              upper="0" />
-
-<!-- *********************************** HAND ************************************ -->
-  <xacro:hand side="l"
+<!-- *********************************** PALM ************************************* -->
+  <xacro:palm side="l"
               axis_y_signal="1" />
+<!-- ************************************ THUMB *********************************** -->
+  <xacro:thumb_finger side="l"
+                      axis_y_signal="1"
+                      lower="1"
+                      upper="0" />
+<!-- ********************* FOUR FINGERS(INDEX, MIDDLE, THIRD, LITTLE) ************* -->
+
+  <xacro:generic_finger name= "index"
+                        side="l"
+                        axis_y_signal="1"
+                        lower="1"
+                        upper="0"
+                        ref_point="${(PALM_LENGTH/2)-GENERIC_FINGERS_RADIUS}"
+                        bottom_length="${INDEX_BOTTOM_LENGTH}"
+                        middle_length="${INDEX_MIDDLE_LENGTH}"
+                        top_length="${INDEX_TOP_LENGTH}" />
+
+  <xacro:generic_finger name= "middle"
+                        side="l"
+                        axis_y_signal="1"
+                        lower="1"
+                        upper="0"
+                        ref_point="${(PALM_LENGTH/2)-GENERIC_FINGERS_RADIUS*3-INTERVAL_BETWEEN_FINGERS}"
+                        bottom_length="${MIDDLE_BOTTOM_LENGTH}"
+                        middle_length="${MIDDLE_MIDDLE_LENGTH}"
+                        top_length="${MIDDLE_TOP_LENGTH}" />
+
+  <xacro:generic_finger name= "third"
+                        side="l"
+                        axis_y_signal="1"
+                        lower="1"
+                        upper="0"
+                        ref_point="${(PALM_LENGTH/2)-GENERIC_FINGERS_RADIUS*5-INTERVAL_BETWEEN_FINGERS*2}"
+                        bottom_length="${THIRD_BOTTOM_LENGTH}"
+                        middle_length="${THIRD_MIDDLE_LENGTH}"
+                        top_length="${THIRD_TOP_LENGTH}" />
+
+  <xacro:generic_finger name= "little"
+                        side="l"
+                        axis_y_signal="1"
+                        lower="1"
+                        upper="0"
+                        ref_point="${(PALM_LENGTH/2)-GENERIC_FINGERS_RADIUS*7-INTERVAL_BETWEEN_FINGERS*3}"
+                        bottom_length="${LITTLE_BOTTOM_LENGTH}"
+                        middle_length="${LITTLE_MIDDLE_LENGTH}"
+                        top_length="${LITTLE_TOP_LENGTH}" />
 
 </robot>

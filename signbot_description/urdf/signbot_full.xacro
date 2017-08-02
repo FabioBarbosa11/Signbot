@@ -162,7 +162,7 @@
 			bottom_length="${LITTLE_BOTTOM_LENGTH}" 
 			middle_length="${LITTLE_MIDDLE_LENGTH}"
 			top_length="${LITTLE_TOP_LENGTH}" />
--->
+
 <!-- ////////////////// left side /////////////// -->
 <!-- arm -->
   <xacro:arm side="l" 
