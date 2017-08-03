@@ -1,0 +1,13 @@
+signbot:
+  left/hand/finger/little_controller:
+    type: position_controllers/JointTrajectoryController
+    joints:
+     - l_bottom_knuckle_little_j
+     - l_middle_knuckle_little_j
+     - l_top_knuckle_little_j
+
+    gains:
+      l_bottom_knuckle_little_j:   {p: 100.0, i: 0.01, d: 10.0, i_clamp: 0.0}
+      l_middle_knuckle_little_j:    {p: 100.0, i: 0.01, d: 10.0, i_clamp: 0.0}
+      l_top_knuckle_little_j:       {p: 100.0, i: 0.01, d: 10.0, i_clamp: 0.0}
+

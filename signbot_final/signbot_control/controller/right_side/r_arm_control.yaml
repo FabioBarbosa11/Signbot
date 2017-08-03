@@ -1,0 +1,14 @@
+signbot:
+  right/arm_controller:
+    type: position_controllers/JointTrajectoryController
+    joints:
+     - r_shoulder1_joint
+     - r_shoulder2_joint
+     - r_arm_joint
+     - r_elbow1_joint
+
+    gains:
+      r_shoulder1_joint:    {p: 1500.0, i: 0.0, d: 0.1, i_clamp: 0.0}
+      r_shoulder2_joint:    {p: 1500.0, i: 0.0, d: 0.1, i_clamp: 0.0}
+      r_arm_joint:          {p: 1500.0, i: 0.0, d: 0.1, i_clamp: 0.0}
+      r_elbow1_joint:       {p: 1500.0, i: 0.0, d: 0.1, i_clamp: 0.0}

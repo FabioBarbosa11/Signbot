@@ -166,7 +166,7 @@
         <origin xyz="0 0 0" rpy="${PI/2} 0 0" />
          <cylinder radius="${ARM_RADIUS}" length="${SHOULDER_LENGTH}"/>
   </xacro:link_shape>
-  <xacro:gazebo_blue name="{side}_shoulder1_link" />
+  <xacro:gazebo_blue name="${side}_shoulder1_link" />
 
   <joint name="${side}_shoulder1_joint" type="revolute">
     <parent link="torso_link"/>
@@ -181,7 +181,7 @@
         <origin xyz="0 0 0" rpy="0 0 0" />
         <sphere radius="${ARM_RADIUS}"/>
   </xacro:link_shape>
-  <xacro:gazebo_blue name="{side}_shoulder2_link" />
+  <xacro:gazebo_blue name="${side}_shoulder2_link" />
 
   <joint name="${side}_shoulder2_joint" type="revolute">
     <parent link="${side}_shoulder1_link"/>
@@ -196,7 +196,7 @@
         <origin rpy="${PI/2} 0 0" xyz="0 ${axis_y_signal*(ARM_LENGTH/2)} 0"/>
         <cylinder radius="${ARM_RADIUS}" length="${ARM_LENGTH}"/>
   </xacro:link_shape>
-  <xacro:gazebo_white name="{side}_arm_link" />
+  <xacro:gazebo_white name="${side}_arm_link" />
 
   <joint name="${side}_arm_joint" type="revolute">
     <parent link="${side}_shoulder2_link"/>
@@ -211,7 +211,7 @@
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <cylinder radius="${ELBOW_RADIUS}" length="${ELBOW_LENGTH}"/>
   </xacro:link_shape>
-  <xacro:gazebo_blue name="{side}_elbow_link" />
+  <xacro:gazebo_blue name="${side}_elbow_link" />
 
   <joint name="${side}_elbow1_joint" type="revolute">
     <parent link="${side}_arm_link"/>
@@ -226,7 +226,7 @@
          <origin rpy="${PI/2} 0 0" xyz="0 ${axis_y_signal*(FOREARM_LENGTH/2)} 0"/>
          <cylinder radius="${ARM_RADIUS}" length="${FOREARM_LENGTH}"/>
   </xacro:link_shape>
-  <xacro:gazebo_white name="{side}_forearm_link" />
+  <xacro:gazebo_white name="${side}_forearm_link" />
 
   <joint name="${side}_elbow2_joint" type="fixed">
     <parent link="${side}_elbow_link"/>
@@ -250,7 +250,7 @@
         <origin xyz="0 0 0" rpy="${PI/2} 0 0" />
         <cylinder radius="${WRIST_RADIUS}" length="${WRIST_LENGTH}"/>
   </xacro:link_shape>
-  <xacro:gazebo_blue name="{side}_wirst1_l" />
+  <xacro:gazebo_blue name="${side}_wirst1_l" />
 
   <joint name="${side}_wirst1_j" type="revolute">
     <parent link="${side}_forearm_link"/>
@@ -265,7 +265,7 @@
         <origin xyz="0 0 0" rpy="0 0 0" />
         <sphere radius="${WRIST_RADIUS}"/>
   </xacro:link_shape>
-  <xacro:gazebo_blue name="{side}_wirst2_l" />
+  <xacro:gazebo_blue name="${side}_wirst2_l" />
 
   <joint name="${side}_wirst2_j" type="revolute">
     <parent link="${side}_wirst1_l"/>
@@ -280,7 +280,7 @@
         <origin rpy="${PI/2} 0 0" xyz="0 ${axis_y_signal*0.17} 0 "/>
         <box size="${PALM_DEPTH} ${PALM_LENGTH} ${PALM_HEIGHT}"/>
   </xacro:link_shape>
-  <xacro:gazebo_blue name="{side}_palm_l" />
+  <xacro:gazebo_white name="${side}_palm_l" />
 
   <joint name="${side}_wirst3_j" type="revolute">
     <parent link="${side}_wirst2_l"/>
@@ -306,9 +306,9 @@
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <sphere radius="${THUMB_RADIUS}" />
     </xacro:link_shape>
-    <xacro:gazebo_blue name="{side}_bottom_knuckle_thumb_l" />
+    <xacro:gazebo_blue name="${side}_bottom_knuckle_thumb_l" />
 
-    <joint name="${side}_bottom_knuckle_thumb_j" type="revolute">
+    <joint name="${side}_bottom_knuckle1_thumb_j" type="revolute">
         <parent link="${side}_palm_l"/>
         <child link="${side}_bottom_knuckle_thumb_l"/>
         <origin xyz="0 ${axis_y_signal*THUMB_RADIUS} ${(PALM_LENGTH/2)+THUMB_RADIUS+TOLERANCE}" />
@@ -321,9 +321,9 @@
         <origin rpy="0 0 0" xyz="0 0 ${THUMB_BOTTOM_LENGTH/2}"/>
         <cylinder radius="${THUMB_RADIUS}" length="${THUMB_BOTTOM_LENGTH}"/>
     </xacro:link_shape>
-    <xacro:gazebo_white name="{side}_bottom_thumb_l" />
+    <xacro:gazebo_white name="${side}_bottom_thumb_l" />
 
-    <joint name="${side}_knuckle_upper_thumb_j" type="revolute">
+    <joint name="${side}_bottom_knuckle2_thumb_j" type="revolute">
         <parent link="${side}_bottom_knuckle_thumb_l"/>
         <child link="${side}_bottom_thumb_l"/>
         <origin xyz="0 0 0"/>
@@ -336,9 +336,9 @@
           <origin rpy="0 ${PI/2} 0" xyz="0 0 0"/>
           <cylinder radius="${THUMB_KNUCKLE_RADIUS}" length="${THUMB_RADIUS*2}"/>
       </xacro:link_shape>
-      <xacro:gazebo_blue name="{side}_middle_thumb_l" />
+      <xacro:gazebo_blue name="${side}_middle_knuckle_thumb_l" />
 
-      <joint name="${side}_middle_knuckle_thumb_j" type="revolute">
+      <joint name="${side}_top_knuckle_thumb_j" type="revolute">
           <parent link="${side}_bottom_thumb_l"/>
           <child link="${side}_middle_knuckle_thumb_l"/>
           <origin xyz="0 0 ${THUMB_BOTTOM_LENGTH+THUMB_KNUCKLE_RADIUS}"/>
@@ -351,7 +351,7 @@
         <origin rpy="0 0 0" xyz="0 0 ${THUMB_TOP_LENGTH/2}"/>
         <cylinder radius="${THUMB_RADIUS}" length="${THUMB_TOP_LENGTH}"/>
     </xacro:link_shape>
-    <xacro:gazebo_white name="{side}_middle_thumb_l" />
+    <xacro:gazebo_white name="${side}_middle_thumb_l" />
 
     <joint name="${side}_middle_thumb_j" type="fixed">
         <parent link="${side}_middle_knuckle_thumb_l"/>
@@ -363,7 +363,7 @@
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <sphere radius="${THUMB_RADIUS}"/>
     </xacro:link_shape>
-    <xacro:gazebo_white name="{side}_top_thumb_l" />
+    <xacro:gazebo_white name="${side}_top_thumb_l" />
 
     <joint name="${side}_top_thumb_j" type="fixed">
         <parent link="${side}_middle_thumb_l"/>
@@ -371,9 +371,9 @@
         <origin xyz="0 0 ${THUMB_TOP_LENGTH}"/>
     </joint>
 <!-- ************************************ TRANSMICION ROS CONTROL ******************************* -->
-   <xacro:transmission_block joint_name="${side}_bottom_knuckle_thumb_j"/>
-   <xacro:transmission_block joint_name="${side}_knuckle_upper_thumb_j"/>
-   <xacro:transmission_block joint_name="${side}_middle_knuckle_thumb_j"/>
+   <xacro:transmission_block joint_name="${side}_bottom_knuckle1_thumb_j"/>
+   <xacro:transmission_block joint_name="${side}_bottom_knuckle2_thumb_j"/>
+   <xacro:transmission_block joint_name="${side}_top_knuckle_thumb_j"/>
 
 </xacro:macro>
 
@@ -390,7 +390,7 @@
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <sphere radius="${GENERIC_FINGERS_RADIUS}" />
     </xacro:link_shape>
-    <xacro:gazebo_blue name="{side}_bottom_knuckle_${name}_l" />
+    <xacro:gazebo_blue name="${side}_bottom_knuckle_${name}_l" />
 
     <joint name="${side}_bottom_knuckle_${name}_j" type="revolute">
         <parent link="${side}_palm_l"/>
@@ -405,7 +405,7 @@
         <origin rpy="${PI/2} 0 0" xyz="0 ${axis_y_signal*(bottom_length/2)} 0"/>
         <cylinder radius="${GENERIC_FINGERS_RADIUS}" length="${bottom_length}"/>
     </xacro:link_shape>
-    <xacro:gazebo_white name="{side}_bottom_${name}_l" />
+    <xacro:gazebo_white name="${side}_bottom_${name}_l" />
 
     <joint name="${side}_knuckle_upper_${name}_j" type="fixed">
         <parent link="${side}_bottom_knuckle_${name}_l"/>
@@ -417,7 +417,7 @@
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <cylinder radius="${GENERIC_FINGER_KNUCKLE_RADIUS}" length="${GENERIC_FINGERS_RADIUS*2}"/>
   </xacro:link_shape>
-  <xacro:gazebo_blue name="{side}_middle_knuckle_${name}_l" />
+  <xacro:gazebo_blue name="${side}_middle_knuckle_${name}_l" />
 
   <joint name="${side}_middle_knuckle_${name}_j" type="revolute">
       <parent link="${side}_bottom_${name}_l"/>
@@ -432,7 +432,7 @@
         <origin rpy="${PI/2} 0 0" xyz="0 ${axis_y_signal*(middle_length/2)} 0"/>
         <cylinder radius="${GENERIC_FINGERS_RADIUS}" length="${middle_length}"/>
     </xacro:link_shape>
-    <xacro:gazebo_white name="{side}_middle_${name}_l" />
+    <xacro:gazebo_white name="${side}_middle_${name}_l" />
 
     <joint name="${side}_middle_${name}_j" type="fixed">
         <parent link="${side}_middle_knuckle_${name}_l"/>
@@ -444,7 +444,7 @@
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <cylinder radius="${GENERIC_FINGER_KNUCKLE_RADIUS}" length="${GENERIC_FINGERS_RADIUS*2}"/>
     </xacro:link_shape>
-    <xacro:gazebo_blue name="{side}_top_knuckle_${name}_l" />
+    <xacro:gazebo_blue name="${side}_top_knuckle_${name}_l" />
 
     <joint name="${side}_top_knuckle_${name}_j" type="revolute">
         <parent link="${side}_middle_${name}_l"/>
@@ -459,7 +459,7 @@
         <origin rpy="${PI/2} 0 0" xyz="0 ${axis_y_signal*(top_length/2)} 0"/>
         <cylinder radius="${GENERIC_FINGERS_RADIUS}" length="${top_length}"/>
     </xacro:link_shape>
-    <xacro:gazebo_white name="{side}_top_${name}_l" />
+    <xacro:gazebo_white name="${side}_top_${name}_l" />
 
     <joint name="${side}_top_${name}_j" type="fixed">
         <parent link="${side}_top_knuckle_${name}_l"/>
@@ -471,7 +471,7 @@
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <sphere radius="${GENERIC_FINGERS_RADIUS}"/>
     </xacro:link_shape>
-    <xacro:gazebo_white name="{side}_toptop_${name}_l" />
+    <xacro:gazebo_white name="${side}_toptop_${name}_l" />
 
     <joint name="${side}_toptop_${name}_j" type="fixed">
         <parent link="${side}_top_${name}_l"/>
