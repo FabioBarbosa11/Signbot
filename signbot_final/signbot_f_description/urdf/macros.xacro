@@ -11,54 +11,56 @@
   <property name="TOLERANCE" value="0.001" />
   <property name="HEAVYWEIGHT" value="50" />
   <property name="LIGHTWEIGHT" value="1" />
+<!-- Legs Constants -->
+  <property name="LEG_DEPTH" value=".20" />
+  <property name="LEG_LENGTH" value=".39"/>
+  <property name="LEG_HEIGHT" value=".70"/>
 <!-- Torso Constants -->
-  <property name="TORSO_DEPTH" value="0.6" />
-  <property name="TORSO_LENGTH" value="1.4"/>
-  <property name="TORSO_HEIGHT" value="1.6"/>
+  <property name="TORSO_DEPTH" value=".20" />
+  <property name="TORSO_LENGTH" value=".39"/>
+  <property name="TORSO_HEIGHT" value=".50"/>
 <!-- Neck constants -->
-  <property name="NECK_RADIUS" value="0.2" />
-  <property name="NECK_LENGTH" value="0.2"/>
+  <property name="NECK_RADIUS" value="0.05" />
+  <property name="NECK_LENGTH" value="0.1"/>
 <!-- head constants -->
-  <property name="HEAD_RADIUS" value="0.4"/>
+  <property name="HEAD_RADIUS" value="0.15"/>
 <!-- arm link properties -->
-  <property name="SHOULDER_LENGTH" value="0.1" />
-  <property name="ARM_RADIUS" value="0.2" />
-  <property name="ARM_LENGTH" value="0.6" />
-  <property name="ELBOW_RADIUS" value="0.15" />
+  <property name="SHOULDER_LENGTH" value="0.001" />
+  <property name="ARM_RADIUS" value="0.05" />
+  <property name="ARM_LENGTH" value="${0.20-(ELBOW_RADIUS/2)}" />
+  <property name="ELBOW_RADIUS" value="0.03" />
   <property name="ELBOW_LENGTH" value="${2*ARM_RADIUS}" />
-  <property name="FOREARM_LENGTH" value="0.7" />
+  <property name="FOREARM_LENGTH" value="${0.29-(ELBOW_RADIUS/2)}" />
 <!-- wrist link properties -->
   <property name="WRIST_RADIUS" value="${ARM_RADIUS}" />
-  <property name="WRIST_LENGTH" value="0.05" />
+  <property name="WRIST_LENGTH" value="0.01" />
 <!-- palm link properties -->
-  <property name="PALM_DEPTH" value="${WRIST_RADIUS}" />
-  <property name="PALM_LENGTH" value="0.43"/>
-  <property name="PALM_HEIGHT" value="0.35"/>
-<!-- thumb finger properties -->
-  <property name="THUMB_RADIUS" value="0.06" />
-  <property name="THUMB_BOTTOM_LENGTH" value="0.11" />
-  <property name="THUMB_TOP_LENGTH" value="${THUMB_RADIUS}" />
-  <property name="THUMB_KNUCKLE_RADIUS" value="0.04" />
+  <property name="PALM_DEPTH" value="0.04" />
+  <property name="PALM_LENGTH" value="0.09"/>
+  <property name="PALM_HEIGHT" value="0.09"/>
 <!-- generic fingers properties -->
-  <property name="GENERIC_FINGERS_RADIUS" value="0.05" />
-  <property name="GENERIC_FINGERS_X" value="0.027" />
-  <property name="INTERVAL_BETWEEN_FINGERS" value="0.01" />
-  <property name="GENERIC_FINGER_KNUCKLE_RADIUS" value="0.03" />
+  <property name="GENERIC_FINGERS_RADIUS" value="0.01" />
+  <property name="GENERIC_FINGERS_X" value="0.01" />
+  <property name="INTERVAL_BETWEEN_FINGERS" value="0.003" />
+  <property name="GENERIC_FINGER_KNUCKLE_RADIUS" value="0.007" />
+<!-- thumb finger properties -->
+  <property name="THUMB_BOTTOM_LENGTH" value="0.03" />
+  <property name="THUMB_TOP_LENGTH" value="${GENERIC_FINGERS_RADIUS}" />
 <!-- index finger properties -->
-  <property name="INDEX_BOTTOM_LENGTH" value="0.1" />
-  <property name="INDEX_MIDDLE_LENGTH" value="0.09" />
+  <property name="INDEX_BOTTOM_LENGTH" value="0.03" />
+  <property name="INDEX_MIDDLE_LENGTH" value="0.02" />
   <property name="INDEX_TOP_LENGTH" value="${GENERIC_FINGERS_RADIUS}" />
 <!--  middle finger properties  -->
-  <property name="MIDDLE_BOTTOM_LENGTH" value="0.12" />
-  <property name="MIDDLE_MIDDLE_LENGTH" value="0.11" />
+  <property name="MIDDLE_BOTTOM_LENGTH" value="0.04" />
+  <property name="MIDDLE_MIDDLE_LENGTH" value="0.03" />
   <property name="MIDDLE_TOP_LENGTH" value="${GENERIC_FINGERS_RADIUS}" />
 <!--  third finger properties  -->
-  <property name="THIRD_BOTTOM_LENGTH" value="0.1" />
-  <property name="THIRD_MIDDLE_LENGTH" value="0.1" />
+  <property name="THIRD_BOTTOM_LENGTH" value="0.035" />
+  <property name="THIRD_MIDDLE_LENGTH" value="0.02" />
   <property name="THIRD_TOP_LENGTH" value="${GENERIC_FINGERS_RADIUS}" />
 <!--  little finger properties  -->
-  <property name="LITTLE_BOTTOM_LENGTH" value="0.075" />
-  <property name="LITTLE_MIDDLE_LENGTH" value="0.075" />
+  <property name="LITTLE_BOTTOM_LENGTH" value="0.02" />
+  <property name="LITTLE_MIDDLE_LENGTH" value="0.01" />
   <property name="LITTLE_TOP_LENGTH" value="${GENERIC_FINGERS_RADIUS}" />
 
 <!-- ******************************************************************************************** -->
@@ -114,13 +116,13 @@
   </joint>
 
   <xacro:link_shape name="legs_link" color="Black"  mass="${HEAVYWEIGHT}" >
-                    <origin xyz="0 0 ${TORSO_HEIGHT/2}" rpy="0 0 0" />
-                    <box size="${TORSO_DEPTH} ${TORSO_LENGTH} ${TORSO_HEIGHT}" />
+                    <origin xyz="0 0 ${LEG_HEIGHT/2}" rpy="0 0 0" />
+                    <box size="${LEG_DEPTH} ${LEG_LENGTH} ${LEG_HEIGHT}" />
   </xacro:link_shape>
   <xacro:gazebo_black name="legs_link" />
   <!-- ************************************ TORSO LINK ****************************************** -->
   <joint name="waist_joint" type="fixed">
-    <origin xyz="0 0 ${TORSO_HEIGHT}" rpy="0 0 0" />
+    <origin xyz="0 0 ${LEG_HEIGHT}" rpy="0 0 0" />
     <parent link="legs_link"/>
     <child link="torso_link"/>
   </joint>
@@ -277,7 +279,7 @@
   </joint>
 <!-- ****************************************** PALM LINK *************************************** -->
   <xacro:link_shape name="${side}_palm_l" color="White" mass="${LIGHTWEIGHT}">
-        <origin rpy="${PI/2} 0 0" xyz="0 ${axis_y_signal*0.17} 0 "/>
+        <origin rpy="${PI/2} 0 0" xyz="0 ${axis_y_signal*PALM_LENGTH/2} 0 "/>
         <box size="${PALM_DEPTH} ${PALM_LENGTH} ${PALM_HEIGHT}"/>
   </xacro:link_shape>
   <xacro:gazebo_white name="${side}_palm_l" />
@@ -285,7 +287,7 @@
   <joint name="${side}_wirst3_j" type="revolute">
     <parent link="${side}_wirst2_l"/>
     <child link="${side}_palm_l"/>
-    <origin xyz="0 ${axis_y_signal*0.10} 0"/>
+    <origin xyz="0 ${axis_y_signal*WRIST_RADIUS} 0"/>
     <axis xyz="0 0 1"/>
     <limit effort="1000.0" lower="-${PI/4}" upper="${PI/4}" velocity="0.5"/>
     <dynamics damping="50" friction="1"/>
@@ -304,14 +306,14 @@
 <xacro:macro name="thumb_finger" params="side axis_y_signal lower upper ">
     <xacro:link_shape name="${side}_bottom_knuckle_thumb_l" color="Blue" mass="${LIGHTWEIGHT}">
         <origin rpy="0 0 0" xyz="0 0 0"/>
-        <sphere radius="${THUMB_RADIUS}" />
+        <sphere radius="${GENERIC_FINGERS_RADIUS}" />
     </xacro:link_shape>
     <xacro:gazebo_blue name="${side}_bottom_knuckle_thumb_l" />
 
     <joint name="${side}_bottom_knuckle1_thumb_j" type="revolute">
         <parent link="${side}_palm_l"/>
         <child link="${side}_bottom_knuckle_thumb_l"/>
-        <origin xyz="0 ${axis_y_signal*THUMB_RADIUS} ${(PALM_LENGTH/2)+THUMB_RADIUS+TOLERANCE}" />
+        <origin xyz="0 ${axis_y_signal*GENERIC_FINGERS_RADIUS} ${(PALM_LENGTH/2)+GENERIC_FINGERS_RADIUS+TOLERANCE}" />
         <axis xyz="1 0 0"/>
         <limit effort="1000.0" lower="-${lower*(PI/2)}" upper="${upper*(PI/2)}" velocity="0.5"/>
         <dynamics damping="50" friction="1"/>
@@ -319,7 +321,7 @@
 <!-- ********************************** BOT THUMB ********************************************** -->
     <xacro:link_shape name="${side}_bottom_thumb_l" color="White" mass="${LIGHTWEIGHT}">
         <origin rpy="0 0 0" xyz="0 0 ${THUMB_BOTTOM_LENGTH/2}"/>
-        <cylinder radius="${THUMB_RADIUS}" length="${THUMB_BOTTOM_LENGTH}"/>
+        <cylinder radius="${GENERIC_FINGERS_RADIUS}" length="${THUMB_BOTTOM_LENGTH}"/>
     </xacro:link_shape>
     <xacro:gazebo_white name="${side}_bottom_thumb_l" />
 
@@ -334,14 +336,14 @@
 <!-- *********************************** MIDDLE KNUCKLE ****************************************** -->
       <xacro:link_shape name="${side}_middle_knuckle_thumb_l" color="Blue" mass="${LIGHTWEIGHT}" >
           <origin rpy="0 ${PI/2} 0" xyz="0 0 0"/>
-          <cylinder radius="${THUMB_KNUCKLE_RADIUS}" length="${THUMB_RADIUS*2}"/>
+          <cylinder radius="${GENERIC_FINGER_KNUCKLE_RADIUS}" length="${GENERIC_FINGERS_RADIUS*2}"/>
       </xacro:link_shape>
       <xacro:gazebo_blue name="${side}_middle_knuckle_thumb_l" />
 
       <joint name="${side}_top_knuckle_thumb_j" type="revolute">
           <parent link="${side}_bottom_thumb_l"/>
           <child link="${side}_middle_knuckle_thumb_l"/>
-          <origin xyz="0 0 ${THUMB_BOTTOM_LENGTH+THUMB_KNUCKLE_RADIUS}"/>
+          <origin xyz="0 0 ${THUMB_BOTTOM_LENGTH+GENERIC_FINGER_KNUCKLE_RADIUS}"/>
           <axis xyz="1 0 0"/>
           <limit effort="1000.0" lower="-${lower*(PI/2)}" upper="${upper*(PI/2)}" velocity="0.5"/>
           <dynamics damping="50" friction="1"/>
@@ -349,19 +351,19 @@
 <!-- ************************************ MIDDLE THUMB ****************************************** -->
     <xacro:link_shape name="${side}_middle_thumb_l" color="White" mass="${LIGHTWEIGHT}" >
         <origin rpy="0 0 0" xyz="0 0 ${THUMB_TOP_LENGTH/2}"/>
-        <cylinder radius="${THUMB_RADIUS}" length="${THUMB_TOP_LENGTH}"/>
+        <cylinder radius="${GENERIC_FINGERS_RADIUS}" length="${THUMB_TOP_LENGTH}"/>
     </xacro:link_shape>
     <xacro:gazebo_white name="${side}_middle_thumb_l" />
 
     <joint name="${side}_middle_thumb_j" type="fixed">
         <parent link="${side}_middle_knuckle_thumb_l"/>
         <child link="${side}_middle_thumb_l"/>
-        <origin xyz="0 0 ${THUMB_KNUCKLE_RADIUS}"/>
+        <origin xyz="0 0 ${GENERIC_FINGER_KNUCKLE_RADIUS}"/>
     </joint>
 <!-- ************************************ TOP THUMB ******************************************** -->
     <xacro:link_shape name="${side}_top_thumb_l" color="White" mass="${LIGHTWEIGHT}">
         <origin rpy="0 0 0" xyz="0 0 0"/>
-        <sphere radius="${THUMB_RADIUS}"/>
+        <sphere radius="${GENERIC_FINGERS_RADIUS}"/>
     </xacro:link_shape>
     <xacro:gazebo_white name="${side}_top_thumb_l" />
 

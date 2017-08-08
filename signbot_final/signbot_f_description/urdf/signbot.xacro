@@ -9,7 +9,7 @@
 <!-- ***************************************************************************** -->
 <xacro:link_shape name="base_link" color="Black"  mass="${HEAVYWEIGHT}" >
                   <origin xyz="0 0 0" rpy="0 0 0" />
-                  <box size="3 3 0.01" />
+                  <box size="1 1 0.01" />
 </xacro:link_shape>
 <xacro:gazebo_black name="base_link" />
 
@@ -49,7 +49,7 @@
                         axis_y_signal="-1"
                         lower="0"
                         upper="1"
-                        ref_point="${(PALM_LENGTH/2)-GENERIC_FINGERS_RADIUS*3-INTERVAL_BETWEEN_FINGERS}"
+                        ref_point="${(PALM_LENGTH/2)-(GENERIC_FINGERS_RADIUS*2)-INTERVAL_BETWEEN_FINGERS-GENERIC_FINGERS_RADIUS}"
                         bottom_length="${MIDDLE_BOTTOM_LENGTH}"
                         middle_length="${MIDDLE_MIDDLE_LENGTH}"
                         top_length="${MIDDLE_TOP_LENGTH}" />
@@ -59,7 +59,7 @@
                         axis_y_signal="-1"
                         lower="0"
                         upper="1"
-                        ref_point="${(PALM_LENGTH/2)-GENERIC_FINGERS_RADIUS*5-INTERVAL_BETWEEN_FINGERS*2}"
+                        ref_point="${(-PALM_LENGTH/2)+(GENERIC_FINGERS_RADIUS*2)+INTERVAL_BETWEEN_FINGERS+GENERIC_FINGERS_RADIUS}"
                         bottom_length="${THIRD_BOTTOM_LENGTH}"
                         middle_length="${THIRD_MIDDLE_LENGTH}"
                         top_length="${THIRD_TOP_LENGTH}" />
@@ -69,7 +69,7 @@
                         axis_y_signal="-1"
                         lower="0"
                         upper="1"
-                        ref_point="${(PALM_LENGTH/2)-GENERIC_FINGERS_RADIUS*7-INTERVAL_BETWEEN_FINGERS*3}"
+                        ref_point="${(-PALM_LENGTH/2)+GENERIC_FINGERS_RADIUS}"
                         bottom_length="${LITTLE_BOTTOM_LENGTH}"
                         middle_length="${LITTLE_MIDDLE_LENGTH}"
                         top_length="${LITTLE_TOP_LENGTH}" />

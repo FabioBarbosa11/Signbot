@@ -74,7 +74,47 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        l_bottom_index_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_bottom_knuckle_index_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_bottom_knuckle_little_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_bottom_knuckle_middle_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_bottom_knuckle_third_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         l_bottom_knuckle_thumb_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_bottom_little_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_bottom_middle_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_bottom_third_l:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -94,7 +134,47 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        l_middle_index_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_middle_knuckle_index_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_middle_knuckle_little_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_middle_knuckle_middle_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_middle_knuckle_third_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         l_middle_knuckle_thumb_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_middle_little_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_middle_middle_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_middle_third_l:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -119,7 +199,67 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        l_top_index_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_top_knuckle_index_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_top_knuckle_little_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_top_knuckle_middle_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_top_knuckle_third_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_top_little_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_top_middle_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_top_third_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         l_top_thumb_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_toptop_index_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_toptop_little_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_toptop_middle_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_toptop_third_l:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -371,7 +511,23 @@ Visualization Manager:
           Value: true
         l_arm_link:
           Value: true
+        l_bottom_index_l:
+          Value: true
+        l_bottom_knuckle_index_l:
+          Value: true
+        l_bottom_knuckle_little_l:
+          Value: true
+        l_bottom_knuckle_middle_l:
+          Value: true
+        l_bottom_knuckle_third_l:
+          Value: true
         l_bottom_knuckle_thumb_l:
+          Value: true
+        l_bottom_little_l:
+          Value: true
+        l_bottom_middle_l:
+          Value: true
+        l_bottom_third_l:
           Value: true
         l_bottom_thumb_l:
           Value: true
@@ -379,7 +535,23 @@ Visualization Manager:
           Value: true
         l_forearm_link:
           Value: true
+        l_middle_index_l:
+          Value: true
+        l_middle_knuckle_index_l:
+          Value: true
+        l_middle_knuckle_little_l:
+          Value: true
+        l_middle_knuckle_middle_l:
+          Value: true
+        l_middle_knuckle_third_l:
+          Value: true
         l_middle_knuckle_thumb_l:
+          Value: true
+        l_middle_little_l:
+          Value: true
+        l_middle_middle_l:
+          Value: true
+        l_middle_third_l:
           Value: true
         l_middle_thumb_l:
           Value: true
@@ -389,7 +561,31 @@ Visualization Manager:
           Value: true
         l_shoulder2_link:
           Value: true
+        l_top_index_l:
+          Value: true
+        l_top_knuckle_index_l:
+          Value: true
+        l_top_knuckle_little_l:
+          Value: true
+        l_top_knuckle_middle_l:
+          Value: true
+        l_top_knuckle_third_l:
+          Value: true
+        l_top_little_l:
+          Value: true
+        l_top_middle_l:
+          Value: true
+        l_top_third_l:
+          Value: true
         l_top_thumb_l:
+          Value: true
+        l_toptop_index_l:
+          Value: true
+        l_toptop_little_l:
+          Value: true
+        l_toptop_middle_l:
+          Value: true
+        l_toptop_third_l:
           Value: true
         l_wirst1_l:
           Value: true
@@ -483,7 +679,7 @@ Visualization Manager:
           Value: true
         torso_link:
           Value: true
-      Marker Scale: 0.1
+      Marker Scale: 0.07
       Name: TF
       Show Arrows: true
       Show Axes: true
@@ -500,6 +696,38 @@ Visualization Manager:
                         l_wirst1_l:
                           l_wirst2_l:
                             l_palm_l:
+                              l_bottom_knuckle_index_l:
+                                l_bottom_index_l:
+                                  l_middle_knuckle_index_l:
+                                    l_middle_index_l:
+                                      l_top_knuckle_index_l:
+                                        l_top_index_l:
+                                          l_toptop_index_l:
+                                            {}
+                              l_bottom_knuckle_little_l:
+                                l_bottom_little_l:
+                                  l_middle_knuckle_little_l:
+                                    l_middle_little_l:
+                                      l_top_knuckle_little_l:
+                                        l_top_little_l:
+                                          l_toptop_little_l:
+                                            {}
+                              l_bottom_knuckle_middle_l:
+                                l_bottom_middle_l:
+                                  l_middle_knuckle_middle_l:
+                                    l_middle_middle_l:
+                                      l_top_knuckle_middle_l:
+                                        l_top_middle_l:
+                                          l_toptop_middle_l:
+                                            {}
+                              l_bottom_knuckle_third_l:
+                                l_bottom_third_l:
+                                  l_middle_knuckle_third_l:
+                                    l_middle_third_l:
+                                      l_top_knuckle_third_l:
+                                        l_top_third_l:
+                                          l_toptop_third_l:
+                                            {}
                               l_bottom_knuckle_thumb_l:
                                 l_bottom_thumb_l:
                                   l_middle_knuckle_thumb_l:
@@ -581,22 +809,22 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 7.10721
+      Distance: 3.31822
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.394891
-        Y: 0.2547
-        Z: 2.32505
+        X: -0.353001
+        Y: 0.105071
+        Z: 1.02549
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.100398
+      Pitch: 0.0103981
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.000405788
+      Yaw: 0.00540733
     Saved: ~
 Window Geometry:
   Displays:
