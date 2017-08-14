@@ -208,17 +208,33 @@
     <limit effort="1000.0" lower="${(-1)*(PI/2)}" upper="${(PI/2)}" velocity="0.5"/>
     <dynamics damping="50" friction="1"/>
   </joint>
-<!-- ****************************************** ELBOW ****************************************** -->
-  <xacro:link_shape name="${side}_elbow_link" color="Blue" mass="${LIGHTWEIGHT}">
-        <origin rpy="0 0 0" xyz="0 0 0"/>
-        <cylinder radius="${ELBOW_RADIUS}" length="${ELBOW_LENGTH}"/>
+<!-- ****************************************** ELBOW1 ****************************************** -->
+  <xacro:link_shape name="${side}_elbow1_link" color="Blue" mass="${LIGHTWEIGHT}">
+        <origin xyz="0 0 0" rpy="${PI/2} 0 0" />
+         <cylinder radius="${ARM_RADIUS}" length="${SHOULDER_LENGTH}"/>
   </xacro:link_shape>
-  <xacro:gazebo_blue name="${side}_elbow_link" />
+  <xacro:gazebo_blue name="${side}_elbow1_link" />
 
   <joint name="${side}_elbow1_joint" type="revolute">
     <parent link="${side}_arm_link"/>
-    <child link="${side}_elbow_link"/>
-    <origin xyz="0 ${axis_y_signal*(ARM_LENGTH+ELBOW_RADIUS)} 0"/>
+    <child link="${side}_elbow1_link"/>
+    <origin xyz="0 ${axis_y_signal*(ARM_LENGTH+(SHOULDER_LENGTH/2))} 0"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="1000.0" lower="${-1*(PI/2)}" upper="${(PI/2)}" velocity="0.5"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+<!-- ****************************************** ELBOW2 ****************************************** -->
+  <xacro:link_shape name="${side}_elbow2_link" color="Blue" mass="${LIGHTWEIGHT}">
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <cylinder radius="${ELBOW_RADIUS}" length="${ELBOW_LENGTH}"/>
+  </xacro:link_shape>
+  <xacro:gazebo_blue name="${side}_elbow2_link" />
+
+  <joint name="${side}_elbow2_joint" type="revolute">
+    <parent link="${side}_elbow1_link"/>
+    <child link="${side}_elbow2_link"/>
+    <origin xyz="0 ${axis_y_signal*((SHOULDER_LENGTH/2)+ELBOW_RADIUS)} 0"/>
     <axis xyz="0 0 1"/>
     <limit effort="1000.0" lower="${lower*-1*(PI/2)}" upper="${upper*(PI/2)}" velocity="0.5"/>
     <dynamics damping="50" friction="1"/>
@@ -230,8 +246,8 @@
   </xacro:link_shape>
   <xacro:gazebo_white name="${side}_forearm_link" />
 
-  <joint name="${side}_elbow2_joint" type="fixed">
-    <parent link="${side}_elbow_link"/>
+  <joint name="${side}_elbow3_joint" type="fixed">
+    <parent link="${side}_elbow2_link"/>
     <child link="${side}_forearm_link"/>
     <origin xyz="0 ${axis_y_signal*(ELBOW_RADIUS)} 0"/>
   </joint>
@@ -240,7 +256,7 @@
           <xacro:transmission_block joint_name="${side}_shoulder2_joint"/>
           <xacro:transmission_block joint_name="${side}_arm_joint"/>
           <xacro:transmission_block joint_name="${side}_elbow1_joint"/>
-
+          <xacro:transmission_block joint_name="${side}_elbow2_joint"/>
 </xacro:macro>
 
 <!-- ******************************************************************************************** -->

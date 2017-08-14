@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<launch>
+<!-- body -->
+        <rosparam file="$(find signbot_control)/controller/all/body_control.yaml" command="load"/>
+
+        <node name="body_controller_spawner"
+              pkg="controller_manager"
+              type="spawner"
+              respawn="false"
+              output="screen"
+              ns="/signbot"
+              args="body_controller"/>
+</launch>
