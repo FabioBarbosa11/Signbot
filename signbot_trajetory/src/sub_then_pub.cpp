@@ -1,11 +1,6 @@
 #include "ros/ros.h"
 #include "trajectory_msgs/JointTrajectory.h"
 
-/*void chatterCallback(const std_msgs::String::ConstPtr& msg)
-{
-  ROS_INFO("I heard: [%s]", msg->data.c_str());
-}*/
-
 class Classola
 {
 public:
@@ -16,7 +11,6 @@ public:
   Classola(const ros::Publisher& joint_trajectory_pub)
     : joint_trajectory_publisher_(joint_trajectory_pub)
   {
-    // joint_trajectory_publisher_ = joint_trajectory_pub;
   }
 
   void trajetoryCallback(const trajectory_msgs::JointTrajectory::ConstPtr& msg)
