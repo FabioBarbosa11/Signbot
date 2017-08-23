@@ -140,9 +140,9 @@ add_executable(signbot_core_node src/signbot_core.cpp)
 add_dependencies(signbot_core_node signbot_core_cpp)
 target_link_libraries(signbot_core_node ${catkin_LIBRARIES})
 
-add_executable(signbot_2poses_node src/signbot_2poses.cpp)
-add_dependencies(signbot_2poses_node signbot_2poses_cpp)
-target_link_libraries(signbot_2poses_node ${catkin_LIBRARIES})
+add_executable(example_bom_dia_node src/example_bom_dia.cpp)
+add_dependencies(example_bom_dia_node example_bom_dia_cpp)
+target_link_libraries(example_bom_dia_node ${catkin_LIBRARIES})
 
 #############
 ## Install ##

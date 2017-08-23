@@ -36,7 +36,7 @@ float leter_b[MAX_JOINTS] = {
                               0, 0, 0
                             };
 
-float bom_dia[2][MAX_JOINTS] =
+float bom_dia[4][MAX_JOINTS] =
 {
   {
     0.52, 1.19, -0.09, -0.16, 1.57,
@@ -46,6 +46,40 @@ float bom_dia[2][MAX_JOINTS] =
     1.57, 1.57, 1.57,
     1.57, 1.57, 1.57,
     1.57, 1.57, 1.57,
+
+    1.57, -1.5, 0, 0, 0,
+    0, 0, 0,
+    0, 0, 0,
+    0, 0, 0,
+    0, 0, 0,
+    0, 0, 0,
+    0, 0, 0
+  },
+  {
+    0.52, 1.19, -0.09, -0.16, 1.57,
+    0.27, 0, 0.3,
+    0, 0, 0,
+    1.57, 1.57, 1.57,
+    1.57, 1.57, 1.57,
+    1.57, 1.57, 1.57,
+    1.57, 1.57, 1.57,
+
+    1.57, -1.5, 0, 0, 0,
+    0, 0, 0,
+    0, 0, 0,
+    0, 0, 0,
+    0, 0, 0,
+    0, 0, 0,
+    0, 0, 0
+  },
+  {
+    0.52, 1.19, -0.09, -0.16, 1.57,
+    0.27, 0, 0.3,
+    0, 0, 0,
+    0, 0, 0,
+    0, 0, 0,
+    0, 0, 0,
+    0, 0, 0,
 
     1.57, -1.5, 0, 0, 0,
     0, 0, 0,
@@ -169,26 +203,34 @@ void prepare_message(trajectory_msgs::JointTrajectory& _message)
 
 void insert_jointvalues(trajectory_msgs::JointTrajectory& _message)
 {
-  int i=0;
+  int i=0, numberposes=6;
   // Create one point in the trajectory.
-  _message.points.resize(3);
+  _message.points.resize(numberposes);
   // Resize the vector to the same length as the joint names.
   // Values are initialized to 0.
-  _message.points[0].positions.resize(_message.joint_names.size());
-  _message.points[1].positions.resize(_message.joint_names.size());
-  _message.points[2].positions.resize(_message.joint_names.size());
+  for(i=0; i<numberposes; i++)
+  {
+    _message.points[i].positions.resize(_message.joint_names.size());
+  }
 
   for(i=0; i<MAX_JOINTS; i++)
   {
-        _message.points[0].positions[i] = bom_dia[0][i];
+        _message.points[0].positions[i] = default_pose[i];
         _message.points[1].positions[i] = bom_dia[0][i];
         _message.points[2].positions[i] = bom_dia[1][i];
+        _message.points[3].positions[i] = bom_dia[2][i];
+        _message.points[4].positions[i] = bom_dia[3][i];
+        _message.points[5].positions[i] = default_pose[i];
+  }
+  for(i=0; i< numberposes; i++)
+  {
+    _message.points[i].time_from_start = ros::Duration(2.0*i+2.0);
   }
 }
 
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "signbot_2poses");
+  ros::init(argc, argv, "example_bom_dia");
   ros::NodeHandle nh;
 
   ros::Rate loop_rate(0.5);
@@ -200,9 +242,7 @@ int main(int argc, char **argv)
   prepare_message(message);
   //insert the angle  value for which joint
   insert_jointvalues(message);
-  message.points[0].time_from_start = ros::Duration(2.0);
-  message.points[1].time_from_start = ros::Duration(4.0);
-  message.points[2].time_from_start = ros::Duration(6.0);
+
 
   if(ros::ok())
   {
