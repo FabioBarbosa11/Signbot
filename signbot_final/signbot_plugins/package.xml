@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<package>
+<package format="2">
   <name>signbot_plugins</name>
   <version>0.0.0</version>
   <description>The signbot_plugins package
@@ -44,7 +44,9 @@
   <!--   <test_depend>gtest</test_depend> -->
   <buildtool_depend>catkin</buildtool_depend>
 
-
+  <depend>rospy</depend>
+  <depend>roscpp</depend>
+  <depend>trajectory_msgs</depend>
   <!-- The export tag contains other, unspecified, tags -->
   <export>
     <!-- Other tools can request additional information be placed here -->
