@@ -4,10 +4,10 @@
 
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "test_with_bodycontroller");
+  ros::init(argc, argv, "example_1pose");
   ros::NodeHandle nh;
 
-  ros::Rate loop_rate(0.2);
+  ros::Rate loop_rate(0.5);
   ros::Publisher r_arm_comand_publisher = nh.advertise<trajectory_msgs::JointTrajectory>("/signbot/body_controller/command", 10);
   // Create a message to send.
   trajectory_msgs::JointTrajectory msg;
@@ -69,7 +69,8 @@ int main(int argc, char **argv)
   // Resize the vector to the same length as the joint names.
   // Values are initialized to 0.
   msg.points[0].positions.resize(msg.joint_names.size(), 1.0);
-  msg.points[0].time_from_start = ros::Duration(1.0);
+  msg.points[0].time_from_start = ros::Duration(2.0);
+  sleep(10);
 
   /// Create a JointTrajectory with all positions set to zero, and command the arm.
   if(ros::ok())
@@ -78,13 +79,7 @@ int main(int argc, char **argv)
 
     ros::spinOnce();
     loop_rate.sleep();
-    ROS_INFO_STREAM ("\n1 - command SENT:\n" << msg);
-// *****************************************************************
-    r_arm_comand_publisher.publish(msg);
-
-    ros::spinOnce();
-    loop_rate.sleep();
-    ROS_INFO_STREAM ("\n2 - command SENT:\n" << msg);
+    ROS_INFO_STREAM ("\ncommand SENT:\n" << msg);
   }
 
   ROS_INFO_STREAM("\n\n\t***** SHUTTING DOWN ********\n\n");
