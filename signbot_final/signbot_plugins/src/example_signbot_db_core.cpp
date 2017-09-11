@@ -1,27 +1,38 @@
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 
+#include "signbot_plugins/gestureInformation.h"
+using signbot_plugins::gestureInformation;
+
+#include <vector>
+using std::vector;
+
+#include <string>
+using std::string;
+
+
 #define MAX_JOINTS 46
 /*******************************************************************************
- *        database
+ *                                database
  * ****************************************************************************/
 
 //vector com as coordenadas default(braços em baixo)
-float default_pose[MAX_JOINTS] = { 1.57, 1.5, 0, 0, 0,
-                                 0, 0, 0,
-                                 0, 0, 0,
-                                 0, 0, 0,
-                                 0, 0, 0,
-                                 0, 0, 0,
-                                 0, 0, 0,
+float default_pose[MAX_JOINTS] = {
+                                   1.57, 1.5, 0, 0, 0,
+                                   0, 0, 0,
+                                   0, 0, 0,
+                                   0, 0, 0,
+                                   0, 0, 0,
+                                   0, 0, 0,
+                                   0, 0, 0,
 
-                                 1.57, -1.5, 0, 0, 0,
-                                 0, 0, 0,
-                                 0, 0, 0,
-                                 0, 0, 0,
-                                 0, 0, 0,
-                                 0, 0, 0,
-                                 0, 0, 0};
+                                   1.57, -1.5, 0, 0, 0,
+                                   0, 0, 0,
+                                   0, 0, 0,
+                                   0, 0, 0,
+                                   0, 0, 0,
+                                   0, 0, 0,
+                                   0, 0, 0};
 
 float leter_b[MAX_JOINTS] = {
                               0.52, 1.19, -0.09, -0.16, 1.57,
@@ -152,16 +163,15 @@ float ajudar[2][MAX_JOINTS] =
 };
 
 /**********************************************************************************
- *
  * *******************************************************************************/
 
 class Word_searcher
 {
 private:
-  ros::Publisher word_LGP_pub_;
+  ros::Publisher gesture_LGP_pub_;
 public:
-  Word_searcher(const ros::Publisher& _word_LGP_pub)
-    :word_LGP_pub_(_word_LGP_pub)
+  Word_searcher(const ros::Publisher& _gesture_LGP_pub)
+    :gesture_LGP_pub_(_gesture_LGP_pub)
   {
 
   }
@@ -174,10 +184,82 @@ public:
 
   void search_database(const std_msgs::String::ConstPtr& _word)
   {
-    //Search in database
+    int i, j;
+    gestureInformation  gesture;
+    //ROS_INFO_STREAM("message receive:\n"<<_word->data<<"\n");
 
+
+    //  ************** Search in database  *****************************
+
+    if(_word->data == "default_pose" )
+      //ou _word->data == "default_pose"
+    {
+      gesture.gesture_name = "default";
+      gesture.max_poses = 1;
+
+      for(i=0; i< MAX_JOINTS; i++)
+      {
+        gesture.poses.push_back(default_pose[i]);
+      }
+    }
+    else
+    {
+      if(_word->data == "b" || _word->data == "B" )
+      {
+        gesture.gesture_name = "b";
+        gesture.max_poses = 1;
+
+        for(i=0; i< MAX_JOINTS; i++)
+        {
+          gesture.poses.push_back(default_pose[i]);
+        }
+
+      }
+      else
+      {
+        if(_word->data == "bom dia")
+        {
+          gesture.gesture_name = "bom dia";
+          gesture.max_poses = 4;
+
+          for(j=0; j< gesture.max_poses; j++)
+          {
+            for(i=0; i< MAX_JOINTS; i++)
+            {
+              gesture.poses.push_back(bom_dia[j][i]);
+            }
+          }
+        }
+        else
+        {
+          if(_word->data == "ajudar")
+          {
+            gesture.gesture_name = "ajudar";
+            gesture.max_poses = 2;
+
+            for(j=0; j< gesture.max_poses ; j++)
+            {
+              for(i=0; i< MAX_JOINTS; i++)
+              {
+                gesture.poses.push_back(ajudar[j][i]);
+              }
+            }
+          }
+          else    //if theres none of the words that exist in the database
+          {
+            gesture.gesture_name = "nao reconhecido";
+            gesture.max_poses = 0;
+
+            for(i=0; i<MAX_JOINTS; i++)
+            {
+              gesture.poses.push_back(0.0);
+            }
+          }
+        }
+      }
+    }
     //send the gesture
-    word_LGP_pub_.publish(*_word);
+    gesture_LGP_pub_.publish(gesture);
   }
 
 };
@@ -188,10 +270,10 @@ int main(int argc, char **argv)
   ros::NodeHandle nh;
 
   //Publisher to send the angles of the gestures
-  ros::Publisher word_LGP_pub = nh.advertise<std_msgs::String>("wordLGP", 10);
-  Word_searcher word_searcher(word_LGP_pub);
+  ros::Publisher gesture_LGP_pub = nh.advertise<gestureInformation>("gestureInfo_LGP", 10);
+  Word_searcher word_searcher(gesture_LGP_pub);
   //Subscriber to listen what word it needs to translate
-  ros::Subscriber word_LP_sub = nh.subscribe("wordLP", 10, &Word_searcher::word_LPCallBack, &word_searcher);
+  ros::Subscriber word_LP_sub = nh.subscribe("word_LP", 10, &Word_searcher::word_LPCallBack, &word_searcher);
 
   sleep(10);
   ROS_INFO_STREAM("\nProgram is ready to execute\n");
@@ -204,99 +286,3 @@ int main(int argc, char **argv)
   ROS_INFO_STREAM("\n\t***** SHUTTING DOWN ********\n");
   return 0;
 }
-
-// *************************************** other tests ******************************** //
-/*
-int main(int argc, char **argv)
-{
-  ros::init(argc, argv, "signbot_db_core");
-  ros::NodeHandle nh;
-  ros::Publisher gesture_pose_pub = nh.advertise<Float32MultiArray>("gesture_pose", 1000);
-
-  ros::Rate loop_rate(0.2);
-
-  //let's build a 3x3 matrix:
-  Float32MultiArray msg;
-
-  msg.layout.dim.push_back(std_msgs::MultiArrayDimension());
-  msg.layout.dim.push_back(std_msgs::MultiArrayDimension());
-
-  msg.layout.dim[0].label = "height";
-  msg.layout.dim[0].size = 3;
-  msg.layout.dim[0].stride = 3*3;
-
-  msg.layout.dim[1].label = "width";
-  msg.layout.dim[1].size = 3;
-  msg.layout.dim[1].stride = 3;
-
-  msg.layout.data_offset = 0;
-
-  msg.data.push_back(1);
-  msg.data.push_back(2);
-  msg.data.push_back(3);
-  msg.data.push_back(4);
-  msg.data.push_back(5);
-  msg.data.push_back(6);
-  msg.data.push_back(7);
-  msg.data.push_back(8);
-  msg.data.push_back(9);
-
-  while (ros::ok())
-  {
-    ROS_INFO_STREAM("\n ola \n");
-    gesture_pose_pub.publish(msg);
-    //Let the world know
-    ROS_INFO("I published something!");
-
-    ros::spinOnce();
-
-    loop_rate.sleep();
-  }  
-  return 0;
-}
-*/
-
-/*
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "ros/ros.h"
-
-#include "std_msgs/MultiArrayLayout.h"
-#include "std_msgs/MultiArrayDimension.h"
-
-#include "std_msgs/Int32MultiArray.h"
-
-int main(int argc, char **argv)
-{
-
-
-  ros::init(argc, argv, "signbot_db_core");
-
-  ros::NodeHandle n;
-
-  ros::Publisher pub = n.advertise<std_msgs::Int32MultiArray>("array", 100);
-
-  while (ros::ok())
-  {
-    std_msgs::Int32MultiArray array;
-    //Clear array
-    array.data.clear();
-    //for loop, pushing data in the size of the array
-    for (int i = 0; i < 90; i++)
-    {
-      //assign array a random number between 0 and 255.
-      array.data.push_back(rand() % 255);
-    }
-    //Publish array
-    pub.publish(array);
-    //Let the world know
-    ROS_INFO("I published something!");
-    //Do this.
-    ros::spinOnce();
-    //Added a delay so not to spam
-    sleep(2);
-  }
-
-}
-*/
