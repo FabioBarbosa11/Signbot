@@ -124,7 +124,12 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        l_elbow_link:
+        l_elbow1_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_elbow2_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -339,7 +344,12 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        r_elbow_link:
+        r_elbow1_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_elbow2_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -531,7 +541,9 @@ Visualization Manager:
           Value: true
         l_bottom_thumb_l:
           Value: true
-        l_elbow_link:
+        l_elbow1_link:
+          Value: true
+        l_elbow2_link:
           Value: true
         l_forearm_link:
           Value: true
@@ -617,7 +629,9 @@ Visualization Manager:
           Value: true
         r_bottom_thumb_l:
           Value: true
-        r_elbow_link:
+        r_elbow1_link:
+          Value: true
+        r_elbow2_link:
           Value: true
         r_forearm_link:
           Value: true
@@ -691,98 +705,100 @@ Visualization Manager:
               l_shoulder1_link:
                 l_shoulder2_link:
                   l_arm_link:
-                    l_elbow_link:
-                      l_forearm_link:
-                        l_wirst1_l:
-                          l_wirst2_l:
-                            l_palm_l:
-                              l_bottom_knuckle_index_l:
-                                l_bottom_index_l:
-                                  l_middle_knuckle_index_l:
-                                    l_middle_index_l:
-                                      l_top_knuckle_index_l:
-                                        l_top_index_l:
-                                          l_toptop_index_l:
-                                            {}
-                              l_bottom_knuckle_little_l:
-                                l_bottom_little_l:
-                                  l_middle_knuckle_little_l:
-                                    l_middle_little_l:
-                                      l_top_knuckle_little_l:
-                                        l_top_little_l:
-                                          l_toptop_little_l:
-                                            {}
-                              l_bottom_knuckle_middle_l:
-                                l_bottom_middle_l:
-                                  l_middle_knuckle_middle_l:
-                                    l_middle_middle_l:
-                                      l_top_knuckle_middle_l:
-                                        l_top_middle_l:
-                                          l_toptop_middle_l:
-                                            {}
-                              l_bottom_knuckle_third_l:
-                                l_bottom_third_l:
-                                  l_middle_knuckle_third_l:
-                                    l_middle_third_l:
-                                      l_top_knuckle_third_l:
-                                        l_top_third_l:
-                                          l_toptop_third_l:
-                                            {}
-                              l_bottom_knuckle_thumb_l:
-                                l_bottom_thumb_l:
-                                  l_middle_knuckle_thumb_l:
-                                    l_middle_thumb_l:
-                                      l_top_thumb_l:
-                                        {}
+                    l_elbow1_link:
+                      l_elbow2_link:
+                        l_forearm_link:
+                          l_wirst1_l:
+                            l_wirst2_l:
+                              l_palm_l:
+                                l_bottom_knuckle_index_l:
+                                  l_bottom_index_l:
+                                    l_middle_knuckle_index_l:
+                                      l_middle_index_l:
+                                        l_top_knuckle_index_l:
+                                          l_top_index_l:
+                                            l_toptop_index_l:
+                                              {}
+                                l_bottom_knuckle_little_l:
+                                  l_bottom_little_l:
+                                    l_middle_knuckle_little_l:
+                                      l_middle_little_l:
+                                        l_top_knuckle_little_l:
+                                          l_top_little_l:
+                                            l_toptop_little_l:
+                                              {}
+                                l_bottom_knuckle_middle_l:
+                                  l_bottom_middle_l:
+                                    l_middle_knuckle_middle_l:
+                                      l_middle_middle_l:
+                                        l_top_knuckle_middle_l:
+                                          l_top_middle_l:
+                                            l_toptop_middle_l:
+                                              {}
+                                l_bottom_knuckle_third_l:
+                                  l_bottom_third_l:
+                                    l_middle_knuckle_third_l:
+                                      l_middle_third_l:
+                                        l_top_knuckle_third_l:
+                                          l_top_third_l:
+                                            l_toptop_third_l:
+                                              {}
+                                l_bottom_knuckle_thumb_l:
+                                  l_bottom_thumb_l:
+                                    l_middle_knuckle_thumb_l:
+                                      l_middle_thumb_l:
+                                        l_top_thumb_l:
+                                          {}
               neck_link:
                 head_link:
                   {}
               r_shoulder1_link:
                 r_shoulder2_link:
                   r_arm_link:
-                    r_elbow_link:
-                      r_forearm_link:
-                        r_wirst1_l:
-                          r_wirst2_l:
-                            r_palm_l:
-                              r_bottom_knuckle_index_l:
-                                r_bottom_index_l:
-                                  r_middle_knuckle_index_l:
-                                    r_middle_index_l:
-                                      r_top_knuckle_index_l:
-                                        r_top_index_l:
-                                          r_toptop_index_l:
-                                            {}
-                              r_bottom_knuckle_little_l:
-                                r_bottom_little_l:
-                                  r_middle_knuckle_little_l:
-                                    r_middle_little_l:
-                                      r_top_knuckle_little_l:
-                                        r_top_little_l:
-                                          r_toptop_little_l:
-                                            {}
-                              r_bottom_knuckle_middle_l:
-                                r_bottom_middle_l:
-                                  r_middle_knuckle_middle_l:
-                                    r_middle_middle_l:
-                                      r_top_knuckle_middle_l:
-                                        r_top_middle_l:
-                                          r_toptop_middle_l:
-                                            {}
-                              r_bottom_knuckle_third_l:
-                                r_bottom_third_l:
-                                  r_middle_knuckle_third_l:
-                                    r_middle_third_l:
-                                      r_top_knuckle_third_l:
-                                        r_top_third_l:
-                                          r_toptop_third_l:
-                                            {}
-                              r_bottom_knuckle_thumb_l:
-                                r_bottom_thumb_l:
-                                  r_middle_knuckle_thumb_l:
-                                    r_middle_thumb_l:
-                                      r_top_thumb_l:
-                                        {}
+                    r_elbow1_link:
+                      r_elbow2_link:
+                        r_forearm_link:
+                          r_wirst1_l:
+                            r_wirst2_l:
+                              r_palm_l:
+                                r_bottom_knuckle_index_l:
+                                  r_bottom_index_l:
+                                    r_middle_knuckle_index_l:
+                                      r_middle_index_l:
+                                        r_top_knuckle_index_l:
+                                          r_top_index_l:
+                                            r_toptop_index_l:
+                                              {}
+                                r_bottom_knuckle_little_l:
+                                  r_bottom_little_l:
+                                    r_middle_knuckle_little_l:
+                                      r_middle_little_l:
+                                        r_top_knuckle_little_l:
+                                          r_top_little_l:
+                                            r_toptop_little_l:
+                                              {}
+                                r_bottom_knuckle_middle_l:
+                                  r_bottom_middle_l:
+                                    r_middle_knuckle_middle_l:
+                                      r_middle_middle_l:
+                                        r_top_knuckle_middle_l:
+                                          r_top_middle_l:
+                                            r_toptop_middle_l:
+                                              {}
+                                r_bottom_knuckle_third_l:
+                                  r_bottom_third_l:
+                                    r_middle_knuckle_third_l:
+                                      r_middle_third_l:
+                                        r_top_knuckle_third_l:
+                                          r_top_third_l:
+                                            r_toptop_third_l:
+                                              {}
+                                r_bottom_knuckle_thumb_l:
+                                  r_bottom_thumb_l:
+                                    r_middle_knuckle_thumb_l:
+                                      r_middle_thumb_l:
+                                        r_top_thumb_l:
+                                          {}
       Update Interval: 0
       Value: true
   Enabled: true

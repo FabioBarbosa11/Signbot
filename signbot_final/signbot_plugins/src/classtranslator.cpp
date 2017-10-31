@@ -17,7 +17,7 @@ MyTranslator::MyTranslator(ros::NodeHandle _node)
 
 void  MyTranslator::phrase_PLCallback(const std_msgs::String::ConstPtr& _phrase)
 {
-  ROS_INFO_STREAM("\nPhrase receive:\n"<<_phrase->data.c_str());
+  //ROS_INFO_STREAM("\nPhrase receive:\n"<<_phrase->data.c_str());
 
   //calls other function who will process and make a publish
   this->trans_pub(_phrase);
@@ -41,13 +41,13 @@ int MyTranslator::trans_pub(const std_msgs::String::ConstPtr& _phrase)
     char_divider+=1;
     first_pointer=char_divider;
   }
-
+/*
   ROS_INFO_STREAM("words:");
   for(i=0; i< max_words; i++)
   {
     ROS_INFO_STREAM(words[i]<<" , ");
   }
-
+*/
   //search on database to known the max number poses for the phrase
   max_poses=1;      //and extra pose for default_pose in the end of the sentence
 
@@ -67,7 +67,7 @@ int MyTranslator::trans_pub(const std_msgs::String::ConstPtr& _phrase)
         {
           if(words[i] == "bom dia")
           {
-            max_poses+=4;
+            max_poses+=3;
           }
           else
           {
@@ -77,8 +77,22 @@ int MyTranslator::trans_pub(const std_msgs::String::ConstPtr& _phrase)
             }
             else    //if theres none of the words that exist in the database
             {
-              ROS_INFO_STREAM("\tERRO: palavra nao encontrada!\n");
-              return -1;
+              if(words[i] == "eu")
+              {
+                max_poses+=1;
+              }
+              else
+              {
+                if(words[i] == "posso")
+                {
+                  max_poses+=2;
+                }
+                else
+                {
+                  ROS_INFO_STREAM("\tERRO: palavra nao encontrada!\n");
+                  return -1;
+                }
+              }
             }
            }
           }
@@ -124,7 +138,7 @@ int MyTranslator::trans_pub(const std_msgs::String::ConstPtr& _phrase)
       {
         if(words[word_index] == "bom dia")
         {
-          num_poses=4;
+          num_poses=3;
           for(j=0;j<num_poses; j++)
           {
             for(i=0; i<MAX_JOINTS; i++)
@@ -146,6 +160,32 @@ int MyTranslator::trans_pub(const std_msgs::String::ConstPtr& _phrase)
                phrase_translated[first_pointer][i] = ajudar[j][i];
               }
               first_pointer++;
+            }
+          }
+          else
+          {
+            if(words[word_index] == "posso")
+            {
+              num_poses=2;
+              for(j=0;j<num_poses; j++)
+              {
+                for(i=0; i<MAX_JOINTS; i++)
+                {
+                 phrase_translated[first_pointer][i] = posso[j][i];
+                }
+                first_pointer++;
+              }
+            }
+            else
+            {
+              if(words[word_index] == "eu")
+              {
+                for(i=0; i<MAX_JOINTS; i++)
+                {
+                 phrase_translated[first_pointer][i] = eu[0][i];
+                }
+                first_pointer++;
+              }
             }
           }
          }
