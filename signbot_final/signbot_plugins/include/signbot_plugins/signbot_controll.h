@@ -20,9 +20,9 @@ public:
 
  void establish_pub(ros::NodeHandle n);
 
- void register_positions(float pos[][MAX_JOINTS], int  num_poses);
+ void register_positions(std::vector<float> _array);
 
- void pub_default_pose(float pos[][MAX_JOINTS]);
+ void pub_default_pose(std::vector<float> _array);
 };
 
 

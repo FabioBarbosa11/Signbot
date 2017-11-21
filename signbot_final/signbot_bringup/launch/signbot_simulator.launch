@@ -1,5 +1,9 @@
 <?xml version="1.0" ?>
 <launch>
+        <include file="$(find mongodb_store)/launch/mongodb_store.launch" >
+                     <arg name="db_path" value="/home/fabiobarbosa/Desktop/db"/>
+         </include>
+
         <include file="$(find signbot_bringup)/launch/signbot_gazebo_body_control.launch" />
 
         <node name="signbot_simulator_core" pkg="signbot_plugins" type="signbot_core_node" />

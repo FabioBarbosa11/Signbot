@@ -7,7 +7,12 @@ project(signbot_plugins)
 find_package(catkin REQUIRED COMPONENTS
   message_generation
   roscpp
-  trajectory_msgs)
+  trajectory_msgs
+
+  geometry_msgs
+  mongodb_store
+  std_msgs
+  std_srvs)
 
 ################################################
 ## Declare ROS messages, services and actions ##
@@ -74,6 +79,8 @@ CATKIN_DEPENDS
       message_runtime
       roscpp
       trajectory_msgs
+
+      geometry_msgs mongodb_store std_msgs std_srvs
 #  DEPENDS system_lib
 )
 
@@ -91,15 +98,21 @@ include_directories(
 ## Declare a C++ library
  add_library(classtranslator src/classtranslator.cpp)
  add_library(signbotcontroll src/signbot_controll.cpp)
+ add_library(signbotdb src/signbotdb.cpp)
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
   add_dependencies(classtranslator ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
   add_dependencies(signbotcontroll ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+  add_dependencies(signbotdb ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
+  target_link_libraries(signbotdb ${catkin_LIBRARIES})
   target_link_libraries(signbotcontroll ${catkin_LIBRARIES})
-  target_link_libraries(classtranslator signbotcontroll ${catkin_LIBRARIES})
+  target_link_libraries(classtranslator signbotcontroll signbotdb ${catkin_LIBRARIES})
+
+
+
 
   add_executable(example_1pose_node src/example_1pose.cpp)
   add_dependencies(example_1pose_node example_1pose_cpp)
@@ -127,4 +140,4 @@ include_directories(
 
   add_executable(signbot_core_node src/signbot_core.cpp)
   add_dependencies(signbot_core_node signbot_core_cpp)
-  target_link_libraries(signbot_core_node classtranslator signbotcontroll ${catkin_LIBRARIES})
+  target_link_libraries(signbot_core_node classtranslator signbotcontroll signbotdb ${catkin_LIBRARIES})

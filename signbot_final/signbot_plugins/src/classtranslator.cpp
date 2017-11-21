@@ -2,22 +2,26 @@
 
 #include <string>
 #include <vector>
+#include "std_msgs/Float32MultiArray.h"
+
 using namespace std;
 
-MyTranslator::MyTranslator(ros::NodeHandle _node)
+MyTranslator::MyTranslator(ros::NodeHandle _node) : sdb(_node) //initalize the messastoreproxy from db object
 {
   phrase_PL_sub = _node.subscribe("phrasePL",10, &MyTranslator::phrase_PLCallback, this);
 
   sc.establish_pub(_node);
 
-  sc.pub_default_pose(default_pose);
+  std::vector<float> _default_poses =  sdb.getposes("default_pose");
+
+  sc.pub_default_pose(_default_poses);
 
   ROS_INFO_STREAM("\nProgram is ready to execute");
 }
 
 void  MyTranslator::phrase_PLCallback(const std_msgs::String::ConstPtr& _phrase)
 {
-  //ROS_INFO_STREAM("\nPhrase receive:\n"<<_phrase->data.c_str());
+  ROS_INFO_STREAM("\nPhrase receive:\n"<<_phrase->data.c_str());
 
   //calls other function who will process and make a publish
   this->trans_pub(_phrase);
@@ -25,7 +29,7 @@ void  MyTranslator::phrase_PLCallback(const std_msgs::String::ConstPtr& _phrase)
 
 int MyTranslator::trans_pub(const std_msgs::String::ConstPtr& _phrase)
 {
-  unsigned int max_poses, max_words, first_pointer,i, num_poses,j, word_index;
+  unsigned int max_poses, max_words, first_pointer,i,j;
   vector<string> words;
 
   //Calculate number of words and separate them in a vector
@@ -48,160 +52,52 @@ int MyTranslator::trans_pub(const std_msgs::String::ConstPtr& _phrase)
     ROS_INFO_STREAM(words[i]<<" , ");
   }
 */
+
   //search on database to known the max number poses for the phrase
   max_poses=1;      //and extra pose for default_pose in the end of the sentence
 
+  // depois seria apenas procurar a palavra na base de dados,
+  // a seguir passar do floatmultaaray para vecto<float>
+  // acrescentar no final mais a pose final
+  // e entregar um array gigante ao signbot control e esse que trata-se de dividir
+  vector<float> lgp_phrase, aux_array;
+
+  lgp_phrase.clear();
+  aux_array.clear();
+
   for(i=0; i< max_words; i++)
   {
-      if(words[i] == "default_pose")
+      aux_array = sdb.getposes(words[i]);
+
+      if(aux_array[0]==-99)
       {
-       max_poses+=1;
+         ROS_INFO_STREAM("\tERRO: palavra nao encontrada!\n");
+         return -1;
       }
-      else
+
+      for(j=0; j<aux_array.size(); j++)
       {
-        if(words[i] == "b")
-        {
-          max_poses+=1;
-        }
-        else
-        {
-          if(words[i] == "bom dia")
-          {
-            max_poses+=3;
-          }
-          else
-          {
-            if(words[i] == "ajudar")
-            {
-              max_poses+=2;
-            }
-            else    //if theres none of the words that exist in the database
-            {
-              if(words[i] == "eu")
-              {
-                max_poses+=1;
-              }
-              else
-              {
-                if(words[i] == "posso")
-                {
-                  max_poses+=2;
-                }
-                else
-                {
-                  ROS_INFO_STREAM("\tERRO: palavra nao encontrada!\n");
-                  return -1;
-                }
-              }
-            }
-           }
-          }
-        }
+         lgp_phrase.push_back(aux_array[j]);
+      }
+
+      aux_array.clear();
   }
 
-  // Creates the variable which will save all poses in order
-  float phrase_translated[max_poses][MAX_JOINTS];
-
-  for(i=0; i<max_poses; i++)
+  //insert the last pose, which is the stand by pose(default_pose)
+  aux_array = sdb.getposes("default_pose");
+  for(j=0; j<aux_array.size(); j++)
   {
-    for(j=0; j<MAX_JOINTS; j++)
-    {
-      phrase_translated[i][j] = 0.0;
-    }
+     lgp_phrase.push_back(aux_array[j]);
   }
-
-  //fills the varible with gesture in order
-  word_index=0;
-  first_pointer=0;
-  while(word_index<max_words)
+/*
+  for(j=0; j<lgp_phrase.size(); j++)
   {
-    ROS_INFO_STREAM("\n copying words... first_pointer: "<<first_pointer<<", word_index:"<<word_index);
-    if(words[word_index] == "default_pose")
-    {
-      for(i=0; i<MAX_JOINTS; i++)
-      {
-       phrase_translated[first_pointer][i] = default_pose[0][i];
-      }
-      first_pointer++;
-    }
-    else
-    {
-      if(words[word_index] == "b")
-      {
-        for(i=0; i<MAX_JOINTS; i++)
-        {
-         phrase_translated[first_pointer][i] = letter_b[0][i];
-        }
-        first_pointer++;
-      }
-      else
-      {
-        if(words[word_index] == "bom dia")
-        {
-          num_poses=3;
-          for(j=0;j<num_poses; j++)
-          {
-            for(i=0; i<MAX_JOINTS; i++)
-            {
-             phrase_translated[first_pointer][i] = bom_dia[j][i];
-            }
-            first_pointer++;
-          }
-        }
-        else
-        {
-          if(words[word_index] == "ajudar")
-          {
-            num_poses=2;
-            for(j=0;j<num_poses; j++)
-            {
-              for(i=0; i<MAX_JOINTS; i++)
-              {
-               phrase_translated[first_pointer][i] = ajudar[j][i];
-              }
-              first_pointer++;
-            }
-          }
-          else
-          {
-            if(words[word_index] == "posso")
-            {
-              num_poses=2;
-              for(j=0;j<num_poses; j++)
-              {
-                for(i=0; i<MAX_JOINTS; i++)
-                {
-                 phrase_translated[first_pointer][i] = posso[j][i];
-                }
-                first_pointer++;
-              }
-            }
-            else
-            {
-              if(words[word_index] == "eu")
-              {
-                for(i=0; i<MAX_JOINTS; i++)
-                {
-                 phrase_translated[first_pointer][i] = eu[0][i];
-                }
-                first_pointer++;
-              }
-            }
-          }
-         }
-        }
-      }
-    word_index++;
+    ROS_INFO_STREAM("angule("<<j<<"):"<<lgp_phrase[j]);
   }
-
-  //fills the last space with default_pose
-  for(i=0; i<MAX_JOINTS; i++)
-  {
-   phrase_translated[max_poses-1][i] = default_pose[0][i];
-  }
-
+  ROS_INFO_STREAM("total poses:"<<lgp_phrase.size());
+*/
   //publishes the message
-  sc.register_positions(phrase_translated, max_poses);
+  sc.register_positions(lgp_phrase);
 
   return 1;
 }

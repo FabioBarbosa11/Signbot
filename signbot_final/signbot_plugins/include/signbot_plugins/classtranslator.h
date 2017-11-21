@@ -2,15 +2,17 @@
 #define _CLASS_TRANSLATOR_
 
 #include "signbot_plugins/signbot_controll.h"
-#include <signbot_plugins/gesture_info.h>
+#include "signbot_plugins/signbotdb.h"
 
 #include "std_msgs/String.h"
 
 class MyTranslator
 {
 private:
- ros::Subscriber phrase_PL_sub;     //Subscriber to listen the phrase in PL
- SignbotController sc;              //class that controls the model in gaebo
+  ros::Subscriber phrase_PL_sub;     //Subscriber to listen the phrase in PL
+  SignbotController sc;              //class that controls the model in gaebo
+  //signbotDB
+  SignbotDB sdb;
 
   int send_defaultpose();
 public:
